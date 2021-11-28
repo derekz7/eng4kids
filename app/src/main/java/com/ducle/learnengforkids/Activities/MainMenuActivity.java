@@ -11,10 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
@@ -24,11 +22,9 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.ducle.learnengforkids.DialogLoading;
 import com.ducle.learnengforkids.FireBase.UserDB;
 import com.ducle.learnengforkids.FireBase.WordDB;
 import com.ducle.learnengforkids.DialogSetting;
@@ -42,11 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ducle.learnengforkids.Adapter.ItemAdapter;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 public class MainMenuActivity extends AppCompatActivity {
     private RecyclerView rcv_menu_tudien;
@@ -181,7 +172,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        startActivity(new Intent(MainMenuActivity.this, MusicActicity.class));
+                        startActivity(new Intent(MainMenuActivity.this, WatchVideoActicity.class));
                     }
                 }, 800);
             }
