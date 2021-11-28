@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">English for Kids</string>
+    <string name="mau_sac">Màu sắc</string>
+    <string name="hinh_dang">Hình dạng</string>
+    <string name="dong_vat">Động vật</string>
+    <string name="hoa_qua">Hoa quả</string>
+    <string name="bang_chu">Bảng chữ cái</string>
+    <string name="hoc_tiengAnh">Học tiếng anh</string>
+    <string name="vid_tieng_anh">Video Tiếng Anh</string>
+    <string name="mini_game">Chơi Game</string>
+    <string name="exit">Bạn có thực sự muốn thoát?</string>
+    <string name="username">Tài khoản</string>
+    <string name="pass">Mật khẩu</string>
+    <string name="chuacotaikhoan">Nếu chưa có tài khoản vui lòng nhấn</string>
+    <string name="signup">Đăng ký</string>
+    <string name="login">Đăng nhập</string>
+    <string name="name">Tên người dùng</string>
+    <string name="loi">Lỗi</string>
+    <string name="checkConnmess">Vui lòng kiểm tra kết nối internet và thử lại!</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="typeUsername">Tên tài khoản</string>
+    <string name="retypePass">Nhập lại mật khẩu</string>
+</resources>

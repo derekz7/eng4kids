@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
+
+        <ImageButton
+            android:id="@+id/btnHomeGame"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginVertical="10dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/btn_shadow"
+            android:scaleType="centerCrop"
+            android:src="@drawable/home"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/btnSettingGame"
+            android:layout_toEndOf="@+id/btnHomeGame"
+            android:fontFamily="@font/zicket"
+            android:text="Learn and Play"
+            android:textColor="@color/darkblue"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnSettingGame"
+            app:layout_constraintStart_toEndOf="@+id/btnHomeGame"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageButton
+            android:id="@+id/btnSettingGame"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginVertical="10dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/btn_shadow"
+            android:scaleType="centerCrop"
+            android:src="@drawable/setting"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/item1"
+            android:layout_width="200dp"
+            android:layout_height="250dp"
+            android:layout_marginHorizontal="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/igbYesNo"
+                android:layout_width="170dp"
+                android:layout_height="200dp"
+                android:background="@drawable/item_shadow"
+                android:scaleType="centerCrop"
+                android:src="@drawable/yesno" />
+
+            <TextView
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corner_shape"
+                android:elevation="6dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Đúng hay Sai"
+                android:textAllCaps="false"
+                android:textColor="@color/darkblue"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/item2"
+            android:layout_width="200dp"
+            android:layout_height="250dp"
+            android:layout_marginHorizontal="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/igbDoanHinh"
+                android:layout_width="170dp"
+                android:layout_height="200dp"
+                android:background="@drawable/item_shadow"
+                android:scaleType="centerCrop"
+                android:src="@drawable/problem" />
+
+            <TextView
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corner_shape"
+                android:elevation="6dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Đoán hình ảnh"
+                android:textAllCaps="false"
+                android:textColor="@color/darkblue"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

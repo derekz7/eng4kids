@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/row_video"
+    android:layout_marginTop="20dp"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginRight="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp">
+
+            <ImageView
+                android:id="@+id/imv_thumbnail"
+                android:layout_width="250dp"
+                android:layout_height="200dp"
+                android:src="@drawable/b"
+                android:scaleType="centerCrop"/>
+        
+    </androidx.cardview.widget.CardView>
+    
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/darkblue"
+        android:text="Learning Game for Kids"
+        android:textSize="20sp"
+        android:gravity="center"/>
+
+
+</LinearLayout>

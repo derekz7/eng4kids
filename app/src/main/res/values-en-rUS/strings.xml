@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">English for Kids</string>
+    <string name="mau_sac">Colors</string>
+    <string name="hinh_dang">Shapes</string>
+    <string name="dong_vat">Animals</string>
+    <string name="hoa_qua">Fruits</string>
+    <string name="bang_chu">Alphabet</string>
+    <string name="hoc_tiengAnh">Learn English</string>
+    <string name="vid_tieng_anh">Video English</string>
+    <string name="mini_game">Play Game</string>
+    <string name="exit">Do you really want to quit?</string>
+    <string name="username">Username</string>
+    <string name="pass">Password</string>
+    <string name="chuacotaikhoan">If you don\'t have an account please press</string>
+    <string name="signup">Sign up</string>
+    <string name="login">Login</string>
+    <string name="name">Username</string>
+    <string name="loi">Error</string>
+    <string name="checkConnmess">Please check your internet connection or try again later!</string>
+    <string name="typeUsername">Username</string>
+    <string name="retypePass">Re-enter password</string>
+</resources>

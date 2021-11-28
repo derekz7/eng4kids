@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    tools:ignore="InvalidId">
+
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp">
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/anim_ballon"
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|top"
+            android:scaleType="fitCenter"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/travelling" />
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/forestback"
+            android:scaleType="centerCrop"/>
+
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layoutAnimation="@anim/layout_slide_up"/>
+
+        <LinearLayout
+            android:id="@+id/linear_layoutmenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clipToPadding="false"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/item1"
+                android:layout_width="200dp"
+                android:layout_height="250dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/img_tudien"
+                    android:layout_width="170dp"
+                    android:layout_height="200dp"
+                    android:background="@drawable/item_shadow"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/reading" />
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/hoc_tiengAnh"
+                    android:textAllCaps="false"
+                    android:background="@drawable/corner_shape"
+                    android:textStyle="bold"
+                    android:textColor="@color/darkblue"
+                    android:elevation="6dp"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/item2"
+                android:layout_width="200dp"
+                android:layout_height="250dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/img_amnhac"
+                    android:layout_width="170dp"
+                    android:layout_height="200dp"
+                    android:background="@drawable/item_shadow"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/video"/>
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+
+                    android:padding="5dp"
+                    android:text="@string/vid_tieng_anh"
+                    android:textAllCaps="false"
+                    android:background="@drawable/corner_shape"
+                    android:textStyle="bold"
+                    android:elevation="6dp"
+                    android:textColor="@color/darkblue"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/item3"
+                android:layout_width="200dp"
+                android:layout_height="250dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/img_kiemtra"
+                    android:layout_width="170dp"
+                    android:layout_height="200dp"
+                    android:background="@drawable/item_shadow"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/jigsaw" />
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/mini_game"
+                    android:elevation="6dp"
+                    android:textAllCaps="false"
+                    android:background="@drawable/corner_shape"
+                    android:textStyle="bold"
+                    android:textColor="@color/darkblue"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+    <ImageButton
+        android:id="@+id/btnhome"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_shadow"
+        android:scaleType="fitCenter"
+        android:src="@drawable/home" />
+
+    <LinearLayout
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:background="@drawable/item_shadow"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/patient" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="25dp"
+                android:text="Username"
+                android:textColor="@color/darkblue"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/kitto"/>
+
+            <TextView
+                android:id="@+id/tvScore"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/star"
+                android:text="1000"
+                android:textColor="@color/darkblue"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/kitto"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <ImageButton
+        android:id="@+id/btnsetting"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/btn_shadow"
+        android:scaleType="centerCrop"
+        android:src="@drawable/setting" />
+
+
+</RelativeLayout>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "939971404369",
+    "project_id": "english-for-kids-d9dc7",
+    "storage_bucket": "english-for-kids-d9dc7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939971404369:android:af218e283e575d9a3f8e70",
+        "android_client_info": {
+          "package_name": "com.ducle.learnengforkids"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "939971404369-h4n3ulmbm5g449422b9fr5s91u82hs08.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ducle.learnengforkids",
+            "certificate_hash": "06888f10173d3a8c5868ef48922396e88cf06355"
+          }
+        },
+        {
+          "client_id": "939971404369-3oledvhh886s1df4us8e42fviq8810p4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC23jeESTfZt50PPKlzbAhM3omjfcT1Iuk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "939971404369-3oledvhh886s1df4us8e42fviq8810p4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

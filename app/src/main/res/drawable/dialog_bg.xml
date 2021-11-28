@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="false">
+        <layer-list>
+            <!-- SHADOW -->
+            <item>
+                <shape>
+                    <solid android:color="#25000000"/>
+                    <!-- alttan gölge -->
+                    <corners android:topLeftRadius="20dp"
+                        android:topRightRadius="20dp"
+                        android:bottomLeftRadius="20dp"
+                        android:bottomRightRadius="20dp"/>
+                </shape>
+            </item>
+
+            <item
+                android:bottom="10px"
+                android:right="5px"
+                >
+                <shape>
+                    <padding android:bottom="10dp"/>
+                    <gradient
+                        android:startColor="#536CF4"
+                        android:centerColor="#2B9DF8"
+                        android:endColor="#89CBEC"
+                        android:angle="270" />
+                    <corners
+                        android:radius="20dp"/>
+                    <padding
+                        android:top="8dp"
+                        android:right="5dp"
+                 />
+                    <stroke android:color="@color/white"
+                        android:width="2dp"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <item android:state_pressed="true">
+        <layer-list>
+            <!-- SHADOW -->
+            <item>
+                <shape>
+                    <solid android:color="#1E000000"/>
+                    <corners android:radius="20dp"/>
+
+                </shape>
+            </item>
+            <!-- BUTTON -->
+            <item android:bottom="5px">
+                <shape>
+                    <padding android:bottom="5dp"/>
+                    <gradient
+                        android:startColor="#FFFDE4"
+                        android:endColor="#005AA7"
+                        android:angle="270" />
+                    <corners
+                        android:radius="20dp"/>
+                    <padding
+                        android:left="8dp"
+                        android:top="10dp"
+                        android:right="10dp"
+                        android:bottom="12dp"/>
+
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>
