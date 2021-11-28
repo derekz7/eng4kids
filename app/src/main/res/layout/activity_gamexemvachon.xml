@@ -24,7 +24,7 @@
             android:text="0"
             android:textColor="@color/darkblue"
             android:textSize="25sp"
-            app:drawableStartCompat="@drawable/star"
+            app:drawableStartCompat="@drawable/coin_"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnSettingGameDH"
             app:layout_constraintHorizontal_bias="0.0"

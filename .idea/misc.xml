@@ -8,6 +8,7 @@
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/drawable/btn_shadow.xml" value="0.25625" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/drawable/btn_shadow_orange.xml" value="0.25625" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/drawable/corner_around.xml" value="0.2526041666666667" />
+        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/drawable/corner_banner.xml" value="0.25625" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/drawable/corner_bottom.xml" value="0.25625" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/drawable/corner_shape.xml" value="0.25625" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/drawable/corner_top.xml" value="0.2526041666666667" />
@@ -40,12 +41,12 @@
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/activity_yesnogame.xml" value="0.176" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_exit.xml" value="0.24010416666666667" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_loading.xml" value="0.4" />
-        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_score.xml" value="0.20959774170783346" />
+        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_score.xml" value="0.152" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_setting.xml" value="0.152" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/fragment_gameyesno.xml" value="0.176" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/item_menudictionary.xml" value="0.176" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/layout_dictionary.xml" value="0.176" />
-        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/layout_main_menu.xml" value="0.38671875" />
+        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/layout_main_menu.xml" value="0.176" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/layout_music.xml" value="0.152" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/row_alphabet.xml" value="0.24010416666666667" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/row_tuvung.xml" value="0.176" />

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -48,7 +49,7 @@ import java.util.List;
 import java.util.Queue;
 
 public class DoanHinhActivity extends AppCompatActivity {
-    private int timer = 20000;
+    private final int timer = 20000;
     private ImageButton igbSpeakDH, btnBacKDH, igbSetting;
     private RecyclerView rcvLuaChon;
     private ImageView imgDapAn;
@@ -69,6 +70,7 @@ public class DoanHinhActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gamexemvachon);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        ChoiGameActivity.mpGame.start();
         initUI();
         setViewUser();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DoanHinhActivity.this, RecyclerView.HORIZONTAL, false);
@@ -88,12 +90,11 @@ public class DoanHinhActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         if (checkDapAn(cauHoiList.get(currentQuestion).getListLuachon().get(position).getNoiDung())) {
-                            Toast.makeText(DoanHinhActivity.this, "Correct", Toast.LENGTH_SHORT).show();
-                            showAns();
+                            playSound(R.raw.success);
                         } else {
-                            Toast.makeText(DoanHinhActivity.this, "Fail", Toast.LENGTH_SHORT).show();
-                            showAns();
+                            playSound(R.raw.losing);
                         }
+                        showAns();
                     }
                 },400);
 
@@ -126,7 +127,7 @@ public class DoanHinhActivity extends AppCompatActivity {
                 MainMenuActivity.setAnim_button_click(igbSetting);
                 PlayMusic.playClick(v.getContext());
                 DialogSetting dialogSetting = new DialogSetting(DoanHinhActivity.this);
-                dialogSetting.show(Gravity.CENTER);
+                dialogSetting.show(ChoiGameActivity.mpGame);
             }
         });
     }
@@ -135,16 +136,15 @@ public class DoanHinhActivity extends AppCompatActivity {
         if (currentQuestion >= cauHoiList.size()) {
             countDownTimer.cancel();
             //Hoan thanh tro choi
-            Toast.makeText(this, "Diem " + (newScore + score), Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "End", Toast.LENGTH_SHORT).show();
             tvDiem.setText(String.valueOf(score + newScore));
-            //save score
+            //save and update score
             db.updateDiem(username,(score + newScore));
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("diem",String.valueOf(newScore + score));
             editor.apply();
+            playSound(R.raw.achivement);
+            dialogScore();
             currentQuestion = 0;
-            dialogScore(Gravity.CENTER);
             newScore = 0;
         } else {
             rcvLuaChon.setVisibility(View.VISIBLE);
@@ -152,10 +152,10 @@ public class DoanHinhActivity extends AppCompatActivity {
             CauHoi cauHoi = cauHoiList.get(currentQuestion);
             cauHoiNow = cauHoi;
             tvNoiDung.setText(cauHoi.getDapan().getNoiDung());
+            tvCurrentQuestion.startAnimation(startAnim());
             tvCurrentQuestion.setText((currentQuestion+1)+"/"+cauHoiList.size());
             toSpeak.speak(tvNoiDung.getText().toString());
             imgDapAn.setImageResource(R.drawable.question);
-            Toast.makeText(DoanHinhActivity.this, "Cau " + currentQuestion, Toast.LENGTH_SHORT).show();
             luachonAdapter.setData(cauHoi.getListLuachon());
             rcvLuaChon.setAdapter(luachonAdapter);
             setCountDownTimer();
@@ -218,6 +218,25 @@ public class DoanHinhActivity extends AppCompatActivity {
         ViewQuestion();
     }
 
+
+    //sound effect
+    private void playSound(int rawRes) {
+        MediaPlayer sound = MediaPlayer.create(this, rawRes);
+        sound.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                sound.setVolume(0.1f,0.1f);
+                sound.start();
+            }
+        });
+        sound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                sound.release();
+            }
+        });
+    }
+
     private void initUI() {
         igbSetting = findViewById(R.id.btnSettingGameDH);
         btnBacKDH = findViewById(R.id.btnBacKDH);
@@ -240,17 +259,14 @@ public class DoanHinhActivity extends AppCompatActivity {
         score = Integer.parseInt(sharedPreferences.getString("diem", ""));
         tvDiem.setText(String.valueOf(score));
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
+    //anim
+    private Animation startAnim(){
+        return AnimationUtils.loadAnimation(this,R.anim.anim_blink);
     }
 
+
     @SuppressLint("SetTextI18n")
-    private void dialogScore(int gravity){
+        private void dialogScore(){
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_score);
@@ -267,29 +283,39 @@ public class DoanHinhActivity extends AppCompatActivity {
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams windowAttributes = window.getAttributes();
-        windowAttributes.windowAnimations = R.style.dialog_setting_anim;
-        windowAttributes.gravity = gravity;
+        windowAttributes.gravity = Gravity.CENTER;
         window.setAttributes(windowAttributes);
-
-        if (Gravity.BOTTOM == gravity || Gravity.CENTER == gravity || Gravity.TOP == gravity) {
-            dialog.setCancelable(true);
-        } else {
-            dialog.setCancelable(false);
-        }
+        dialog.setCancelable(false);
 
         igbReplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refreshQuestion();
-                dialog.cancel();
+                PlayMusic.playClick(DoanHinhActivity.this);
+                MainMenuActivity.setAnim_button_click(igbReplay);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshQuestion();
+                        dialog.cancel();
+                    }
+                },400);
+
             }
         });
 
         igbReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                dialog.dismiss();
+                PlayMusic.playClick(DoanHinhActivity.this);
+                MainMenuActivity.setAnim_button_click(igbReturn);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                        dialog.dismiss();
+                    }
+                },400);
+
             }
         });
 
@@ -299,5 +325,17 @@ public class DoanHinhActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        PlayMusic.playClick(this);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+        ChoiGameActivity.mpGame.pause();
+    }
+
+
 }

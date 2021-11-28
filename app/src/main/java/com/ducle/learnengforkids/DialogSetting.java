@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.view.Gravity;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 
+import com.ducle.learnengforkids.Activities.ChoiGameActivity;
 import com.ducle.learnengforkids.Activities.DangNhapActivity;
 import com.ducle.learnengforkids.Activities.MainMenuActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +34,7 @@ public class DialogSetting {
         sharedPreferences = context.getSharedPreferences("dataLogin", Context.MODE_PRIVATE);
     }
 
-    public void show(int gravity) {
+    public void show(MediaPlayer mediaPlayer) {
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_setting);
@@ -46,12 +48,6 @@ public class DialogSetting {
         skMusic = dialog.findViewById(R.id.skbarVolume);
         igbLogout = dialog.findViewById(R.id.igbLogOut);
 
-        if (MainMenuActivity.mpbackground.isPlaying()){
-            igbMusic.setImageResource(R.drawable.speaker);
-        }
-        else {
-            igbMusic.setImageResource(R.drawable.mute);
-        }
         Window window = dialog.getWindow();
         if (window == null) {
             return;
@@ -60,14 +56,9 @@ public class DialogSetting {
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams windowAttributes = window.getAttributes();
         windowAttributes.windowAnimations = R.style.dialog_setting_anim;
-        windowAttributes.gravity = gravity;
+        windowAttributes.gravity = Gravity.CENTER;
         window.setAttributes(windowAttributes);
-
-        if (Gravity.BOTTOM == gravity || Gravity.CENTER == gravity || Gravity.TOP == gravity) {
-            dialog.setCancelable(true);
-        } else {
-            dialog.setCancelable(false);
-        }
+        dialog.setCancelable(true);
         igbExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +88,7 @@ public class DialogSetting {
 
             }
         });
-        if (MainMenuActivity.mpbackground.isPlaying()){
+        if (mediaPlayer.isPlaying()){
             igbMusic.setImageResource(R.drawable.speaker);
             skMusic.setEnabled(true);
             skMusic.setAlpha(1);
@@ -113,13 +104,13 @@ public class DialogSetting {
             public void onClick(View v) {
                 igbMusic.startAnimation(MainMenuActivity.getAnimClick(context));
                 PlayMusic.playClick(v.getContext());
-                if (MainMenuActivity.mpbackground.isPlaying()) {
+                if (mediaPlayer.isPlaying()) {
                     igbMusic.setImageResource(R.drawable.mute);
-                    MainMenuActivity.mpbackground.pause();
+                    mediaPlayer.pause();
                     skMusic.setEnabled(false);
                     skMusic.setAlpha((float) 0.5);
                 } else {
-                    MainMenuActivity.mpbackground.start();
+                    mediaPlayer.start();
                     igbMusic.setImageResource(R.drawable.speaker);
                     skMusic.setEnabled(true);
                     skMusic.setAlpha((float) 1);

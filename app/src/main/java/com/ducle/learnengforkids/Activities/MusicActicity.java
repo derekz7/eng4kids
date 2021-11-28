@@ -97,7 +97,7 @@ public class MusicActicity extends YouTubeBaseActivity {
             public void onClick(View v) {
                 MainMenuActivity.setAnim_button_click(btnsetting);
                 PlayMusic.playClick(v.getContext());
-               dialogSetting.show(Gravity.CENTER);
+               dialogSetting.show(MainMenuActivity.mpbackground);
             }
         });
 

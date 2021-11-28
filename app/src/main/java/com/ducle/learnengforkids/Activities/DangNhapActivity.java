@@ -16,7 +16,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -243,7 +242,7 @@ public class DangNhapActivity extends AppCompatActivity {
         edtUsernameDK = findViewById(R.id.edtUsernameDK);
         edtMatKhauDK = findViewById(R.id.edtPassDK);
         btnSignUp = findViewById(R.id.btnSignUp);
-        alpha_layout = AnimationUtils.loadAnimation(this, R.anim.alpha_flash_screen);
+        alpha_layout = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
         fade_out = AnimationUtils.loadAnimation(this, R.anim.fade_out);
         fade_in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         dialogLoading = new DialogLoading(this);
