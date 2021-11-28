@@ -49,11 +49,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainMenuActivity extends AppCompatActivity {
-    public User userLog;
     private RecyclerView rcv_menu_tudien;
     private LinearLayout liner_layoutmenu, item1, item2, item3;
     private ImageButton btnsetting, imbHocTA, imbGame, imbVideo;
-    public static ImageButton btnhome;
     public static LottieAnimationView anim_ballon;
     private ItemAdapter itemAdapter;
     private WordDB wordDB;
@@ -62,8 +60,10 @@ public class MainMenuActivity extends AppCompatActivity {
     private TextView tvUsername, tvScore;
     private SharedPreferences sharedPreferences;
     private UserDB userDB;
-    List<User> userList;
+    private String username = "";
     public static MediaPlayer mpbackground;
+    private List<User> userList;
+    private User userLog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +72,7 @@ public class MainMenuActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         initUI();
         getData();
+        setUserView();
         rcv_menu_tudien.setHasFixedSize(true);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         rcv_menu_tudien.setLayoutManager(layoutManager);
@@ -94,6 +95,7 @@ public class MainMenuActivity extends AppCompatActivity {
                     rll.animate().setDuration(300).scaleX(0.75f).scaleY(0.75f).setInterpolator(new AccelerateInterpolator()).start();
                 }
             }
+
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -102,16 +104,9 @@ public class MainMenuActivity extends AppCompatActivity {
         eventClickButton();
         //music background
         playMusic();
-        setUserView();
 
 
     }
-
-    private void setUserView(){
-       tvUsername.setText(userLog.getUsername());
-       tvScore.setText(String.valueOf(userLog.getDiem()));
-    }
-
 
 
     private void eventClickButton() {
@@ -134,22 +129,7 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PlayMusic.playClick(v.getContext());
-                setAnim_button_click(btnhome);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        btnhome.setVisibility(View.GONE);
-                        liner_layoutmenu.setVisibility(View.VISIBLE);
-                        rcv_menu_tudien.setVisibility(View.GONE);
-                    }
-                }, 800);
 
-            }
-        });
 
         btnsetting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +151,6 @@ public class MainMenuActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         liner_layoutmenu.setVisibility(View.GONE);
-                        btnhome.setVisibility(View.VISIBLE);
                         rcv_menu_tudien.setVisibility(View.VISIBLE);
                     }
                 }, 1000);
@@ -187,7 +166,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(MainMenuActivity.this,ChoiGameActivity.class);
+                        Intent intent = new Intent(MainMenuActivity.this, ChoiGameActivity.class);
                         startActivity(intent);
                     }
                 }, 800);
@@ -215,44 +194,45 @@ public class MainMenuActivity extends AppCompatActivity {
         tvUsername = findViewById(R.id.tvUser);
         tvScore = findViewById(R.id.tvScore);
         liner_layoutmenu = findViewById(R.id.linear_layoutmenu);
-        btnhome = findViewById(R.id.btnhome);
         btnsetting = findViewById(R.id.btnsetting);
         imbVideo = findViewById(R.id.img_amnhac);
         imbGame = findViewById(R.id.img_kiemtra);
         imbHocTA = findViewById(R.id.img_tudien);
         rcv_menu_tudien = findViewById(R.id.rcv_menu);
-        btnhome.setVisibility(View.GONE);
         anim_ballon = findViewById(R.id.anim_ballon);
         rcv_menu_tudien.setVisibility(View.GONE);
         item1 = findViewById(R.id.item1);
         item2 = findViewById(R.id.item2);
         item3 = findViewById(R.id.item3);
-
     }
 
-    private void getData(){
+    private void setUserView() {
+        userLog = userDB.getUserbyUsername(userList, username);
+        tvUsername.setText(userLog.getUsername());
+        tvScore.setText(String.valueOf(userLog.getDiem()));
+    }
+
+    private void getData() {
         userDB = new UserDB();
         wordDB = new WordDB();
         userList = DangNhapActivity.userList;
-        sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
-        String username = sharedPreferences.getString("username","");
-        userLog = userDB.getUserbyUsername(userList,username);
         listTubyLoai = new ArrayList<>();
         loaiTuList = wordDB.getListLoai();
         listTuVung = wordDB.getListTuVung();
+        sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
+        username = sharedPreferences.getString("username", "");
 
     }
 
-    private List<TuVung> getListTuVungbyLoai(LoaiTu loaiTu){
+    private List<TuVung> getListTuVungbyLoai(LoaiTu loaiTu) {
         List<TuVung> list = new ArrayList<>();
-        for (TuVung tuVung : listTuVung){
-            if (tuVung.getLoaiTu().getName().equals(loaiTu.getName())){
+        for (TuVung tuVung : listTuVung) {
+            if (tuVung.getLoaiTu().getName().equals(loaiTu.getName())) {
                 list.add(tuVung);
             }
         }
         return list;
     }
-
 
 
     //animation
@@ -269,7 +249,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        btnhome.setVisibility(View.GONE);
         liner_layoutmenu.setVisibility(View.VISIBLE);
         rcv_menu_tudien.setVisibility(View.GONE);
     }
@@ -290,10 +269,11 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mpbackground.start();
+        setUserView();
     }
 
-    private void playMusic(){
-        mpbackground = MediaPlayer.create(this,R.raw.waltz);
+    private void playMusic() {
+        mpbackground = MediaPlayer.create(this, R.raw.waltz);
         mpbackground.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {

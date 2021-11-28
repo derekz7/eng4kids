@@ -159,18 +159,6 @@
     </FrameLayout>
 
 
-    <ImageButton
-        android:id="@+id/btnhome"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/btn_shadow"
-        android:scaleType="fitCenter"
-        android:src="@drawable/home" />
-
     <LinearLayout
         android:layout_width="230dp"
         android:layout_height="wrap_content"
@@ -198,6 +186,7 @@
                 android:layout_height="wrap_content"
                 android:maxHeight="25dp"
                 android:text="Username"
+                android:paddingStart="20dp"
                 android:textColor="@color/darkblue"
                 android:textSize="20sp"
                 android:layout_marginStart="10dp"
@@ -209,6 +198,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="10dp"
+                android:maxHeight="25dp"
                 android:drawableStart="@drawable/star"
                 android:text="1000"
                 android:textColor="@color/darkblue"

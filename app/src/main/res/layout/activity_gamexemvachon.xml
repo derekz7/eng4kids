@@ -28,19 +28,36 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnSettingGameDH"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/btnHomeGameDH"
+            app:layout_constraintStart_toEndOf="@+id/btnBacKDH"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
+        <TextView
+            android:id="@+id/tvCurrentQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kitto"
+            android:gravity="center"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="10dp"
+            android:text="1/10"
+            android:textColor="#E91E63"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnSettingGameDH"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toEndOf="@+id/btnBacKDH"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageButton
-            android:id="@+id/btnHomeGameDH"
+            android:id="@+id/btnBacKDH"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
             android:background="@drawable/btn_shadow"
             android:scaleType="centerCrop"
-            android:src="@drawable/home"
+            android:src="@drawable/back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -118,7 +135,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvTraLoiDH"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="140dp"
             android:layoutAnimation="@anim/layout_slide_up"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -131,7 +148,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             app:cardCornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
