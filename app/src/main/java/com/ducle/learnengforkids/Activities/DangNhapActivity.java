@@ -120,22 +120,27 @@ public class DangNhapActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btnDangNhap.startAnimation(animClick());
                 PlayMusic.playClick(v.getContext());
-                if (!isConnected(DangNhapActivity.this)) {
-                    dialogErrConn();
-                } else {
-                    if (checkDangNhap()) {
-                        if (edtUsername.getText().toString().equalsIgnoreCase("admin")) {
-                            startActivity(new Intent(DangNhapActivity.this, QuanLyActivity.class));
-                            finish();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!isConnected(DangNhapActivity.this)) {
+                            dialogErrConn();
                         } else {
-                            Intent intent = new Intent(DangNhapActivity.this, MainMenuActivity.class);
-                            startActivity(intent);
-                            finishAffinity();
+                            if (checkDangNhap()) {
+                                if (edtUsername.getText().toString().equalsIgnoreCase("admin")) {
+                                    startActivity(new Intent(DangNhapActivity.this, QuanLyActivity.class));
+                                    finish();
+                                } else {
+                                    Intent intent = new Intent(DangNhapActivity.this, MainMenuActivity.class);
+                                    startActivity(intent);
+                                    finishAffinity();
+                                }
+                            } else {
+                                Toast.makeText(DangNhapActivity.this, "Thông tin tài khoản hoặc mật khẩu không chính xác!", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    } else {
-                        Toast.makeText(DangNhapActivity.this, "Thông tin tài khoản hoặc mật khẩu không chính xác!", Toast.LENGTH_SHORT).show();
                     }
-                }
+                },1000);
 
             }
         });

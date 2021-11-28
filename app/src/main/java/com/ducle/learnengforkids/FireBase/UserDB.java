@@ -28,7 +28,7 @@ public class UserDB {
     public UserDB() {
         database = FirebaseDatabase.getInstance();
         UserRef = database.getReference("User");
-        userList = new ArrayList<>();
+        userList = getListUser();
     }
 
     public void taoTaiKhoan(User user, Activity activity) {
@@ -45,6 +45,7 @@ public class UserDB {
     }
 
     public List<User> getListUser(){
+        userList = new ArrayList<>();
         UserRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -118,8 +119,8 @@ public class UserDB {
         }
         return kt;
     }
-    public void updateDiem(User user, int diem){
-       UserRef.child(user.getUsername()).child("diem").setValue(diem, new DatabaseReference.CompletionListener() {
+    public void updateDiem(String username, int diem){
+       UserRef.child(username).child("diem").setValue(diem, new DatabaseReference.CompletionListener() {
            @Override
            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 Log.d("UpdateDiem","Update diem thanh cong");
@@ -128,7 +129,7 @@ public class UserDB {
 
     }
 
-    public User getUserbyUsername(@NonNull List<User> list, String username){
+    public User getUserbyUsername(List<User> list, String username){
         User user = new User();
         for (User user1: list){
             if (user1.getUsername().equals(username)){
@@ -136,6 +137,24 @@ public class UserDB {
             }
         }
         return user;
+    }
+    public User getUser(String username){
+        final User[] userLog = {new User()};
+        UserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    User user = dataSnapshot.getValue(User.class);
+                    if (user != null && user.getUsername().equals(username)){
+                        userLog[0] = user;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+        return userLog[0];
     }
 
 }
