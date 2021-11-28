@@ -31,7 +31,6 @@ public class DictionaryActivity extends AppCompatActivity {
     private TextView tv_Color;
     private RecyclerView rcv_alphabet;
     private ObjAdapter objAdapter;
-    private TextToSpeech toSpeech;
     private String id = "";
     private ImageButton igbSetting, btnhome;
     private ToSpeak toSpeak;
@@ -62,29 +61,6 @@ public class DictionaryActivity extends AppCompatActivity {
         } else tv_Color.setVisibility(View.VISIBLE);
     }
 
-//
-//    private void speak(List<TuVung> list) {
-//        toSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-//            @Override
-//            public void onInit(int status) {
-//                if (status != TextToSpeech.ERROR) {
-//                    toSpeech.setLanguage(Locale.ENGLISH);
-//                }
-//            }
-//        });
-//        objAdapter.setOnWordClickListener(new ObjAdapter.onObjectClickListener() {
-//            @Override
-//            public void onObjectClick(int position, View v) {
-//                PlayMusic.playClick(v.getContext());
-//                v.startAnimation(MainMenuActivity.getAnimClick(getApplicationContext()));
-//                toSpeech.speak(list.get(position).getNoiDung(), TextToSpeech.QUEUE_FLUSH, null);
-//                imgView.setVisibility(View.VISIBLE);
-//                Picasso.with(getApplicationContext()).load(list.get(position).getImgUrl()).into(imgView);
-//                tv_Color.setText(list.get(position).getNoiDung());
-//            }
-//        });
-//
-//    }
 
     private void buttonClick() {
 
@@ -121,7 +97,7 @@ public class DictionaryActivity extends AppCompatActivity {
                 PlayMusic.playClick(v.getContext());
                 MainMenuActivity.setAnim_button_click(igbSetting);
                 DialogSetting dialogSetting = new DialogSetting(DictionaryActivity.this);
-                dialogSetting.show(Gravity.CENTER);
+                dialogSetting.show(MainMenuActivity.mpbackground);
             }
         });
     }

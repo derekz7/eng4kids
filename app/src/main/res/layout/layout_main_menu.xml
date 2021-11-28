@@ -199,7 +199,7 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="10dp"
                 android:maxHeight="25dp"
-                android:drawableStart="@drawable/star"
+                android:drawableStart="@drawable/coin_"
                 android:text="1000"
                 android:textColor="@color/darkblue"
                 android:textSize="20sp"

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -31,6 +32,7 @@ public class ChoiGameActivity extends AppCompatActivity {
     private ImageButton igbHome, igbSetting;
     public static List<CauHoi> cauHoiList;
     public static List<TuVung> listTu = MainMenuActivity.listTuVung;
+    public static MediaPlayer mpGame;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,7 @@ public class ChoiGameActivity extends AppCompatActivity {
         initUI();
         cauHoiList = getCauHoiList();
         onClick();
+        playMusic();
 
     }
 
@@ -80,7 +83,7 @@ public class ChoiGameActivity extends AppCompatActivity {
                 MainMenuActivity.setAnim_button_click(igbSetting);
                 PlayMusic.playClick(v.getContext());
                 DialogSetting dialogSetting = new DialogSetting(ChoiGameActivity.this);
-                dialogSetting.show(Gravity.CENTER);
+                dialogSetting.show(mpGame);
             }
         });
 
@@ -136,8 +139,35 @@ public class ChoiGameActivity extends AppCompatActivity {
         return listTu;
     }
 
+
+    private void playMusic() {
+        mpGame = MediaPlayer.create(this, R.raw.dogandponny);
+        mpGame.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setVolume(0.2f,0.2f);
+                mp.start();
+                mp.setLooping(true);
+            }
+        });
+        mpGame.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+            }
+        });
+    }
+
+
     @Override
     protected void onPause() {
         super.onPause();
+        mpGame.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mpGame.stop();
     }
 }

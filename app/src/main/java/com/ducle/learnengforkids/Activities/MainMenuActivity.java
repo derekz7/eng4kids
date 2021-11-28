@@ -137,7 +137,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 PlayMusic.playClick(v.getContext());
                 setAnim_button_click(btnsetting);
                 DialogSetting dialogSetting = new DialogSetting(MainMenuActivity.this);
-                dialogSetting.show(Gravity.CENTER);
+                dialogSetting.show(mpbackground);
             }
         });
 
