@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 
 import androidx.appcompat.app.AlertDialog;
@@ -38,7 +36,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MusicActicity extends YouTubeBaseActivity {
+public class WatchVideoActicity extends YouTubeBaseActivity {
 
     private ImageButton btnhome, btnsetting, btnspeak, btnmute;
     public static String API_KEY = "AIzaSyCntiH1cgw2RQRePto4Bto1BzLZzTk4rFQ";
@@ -62,13 +60,13 @@ public class MusicActicity extends YouTubeBaseActivity {
         dialogSetting = new DialogSetting(this);
         MainMenuActivity.mpbackground.pause();
         new MyAsyncTask().execute();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MusicActicity.this, RecyclerView.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(WatchVideoActicity.this, RecyclerView.HORIZONTAL, false);
         rcv_playlist.setLayoutManager(linearLayoutManager);
-        videoAdapter = new VideoAdapter(MusicActicity.this, videoYTList);
+        videoAdapter = new VideoAdapter(WatchVideoActicity.this, videoYTList);
         videoAdapter.setVideoClickListener(new VideoAdapter.onVideoClickListener() {
             @Override
             public void onVideoClick(int position) {
-                Intent intent = new Intent(MusicActicity.this, PlayVideoActivity.class);
+                Intent intent = new Intent(WatchVideoActicity.this, PlayVideoActivity.class);
                 intent.putExtra("ID_VIDEO",videoYTList.get(position).getVideo_ID());
                 startActivity(intent);
             }
@@ -139,7 +137,7 @@ public class MusicActicity extends YouTubeBaseActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MusicActicity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(WatchVideoActicity.this);
                 builder.setIcon(R.drawable.cancel);
                 builder.setTitle("Lỗi");
                 builder.setMessage("Không thể tải xuống dữ liệu\nKiểm tra kết nối mạng và thử lại!");

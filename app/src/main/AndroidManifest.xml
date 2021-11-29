@@ -31,7 +31,7 @@
             android:name=".Activities.DictionaryActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".Activities.MusicActicity"
+            android:name=".Activities.WatchVideoActicity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".Activities.PlayVideoActivity"
