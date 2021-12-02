@@ -15,7 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ducle.learnengforkids.DialogSetting;
+import com.ducle.learnengforkids.FireBase.CauDoDB;
 import com.ducle.learnengforkids.FireBase.UserDB;
+import com.ducle.learnengforkids.Module.CauDo;
 import com.ducle.learnengforkids.Module.CauHoi;
 import com.ducle.learnengforkids.Module.TuVung;
 import com.ducle.learnengforkids.Module.User;
@@ -30,19 +32,29 @@ import java.util.Random;
 public class ChoiGameActivity extends AppCompatActivity {
     private ImageButton igbYesNo, igbDoanHinh;
     private ImageButton igbHome, igbSetting;
-    public static List<CauHoi> cauHoiList;
+    public static List<CauHoi> listCauHoi;
+    public static List<CauDo> cauDoList;
+    private CauDoDB cauDoDB;
     public static List<TuVung> listTu = MainMenuActivity.listTuVung;
     public static MediaPlayer mpGame;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choigame);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         initUI();
-        cauHoiList = getCauHoiList();
+        getData();
+
         onClick();
         playMusic();
 
+    }
+
+    private void getData() {
+        cauDoDB = new CauDoDB();
+        listCauHoi = getCauHoiList();
+        cauDoList = cauDoDB.getAllCauDo();
     }
 
     private void onClick() {
@@ -51,7 +63,7 @@ public class ChoiGameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 igbYesNo.startAnimation(MainMenuActivity.getAnimClick(v.getContext()));
                 PlayMusic.playClick(v.getContext());
-                startActivity(new Intent(ChoiGameActivity.this,YesNoActivity.class));
+                startActivity(new Intent(ChoiGameActivity.this, YesNoActivity.class));
             }
         });
         igbDoanHinh.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +71,7 @@ public class ChoiGameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 igbDoanHinh.startAnimation(MainMenuActivity.getAnimClick(v.getContext()));
                 PlayMusic.playClick(v.getContext());
-                Intent intent = new Intent(ChoiGameActivity.this,DoanHinhActivity.class);
+                Intent intent = new Intent(ChoiGameActivity.this, DoanHinhActivity.class);
                 startActivity(intent);
             }
         });
@@ -73,7 +85,7 @@ public class ChoiGameActivity extends AppCompatActivity {
                     public void run() {
                         finish();
                     }
-                },400);
+                }, 400);
 
             }
         });
@@ -89,20 +101,21 @@ public class ChoiGameActivity extends AppCompatActivity {
 
     }
 
-    public static List<TuVung> randomLuachon(){
+
+    public static List<TuVung> randomLuachon() {
         List<TuVung> listLuaChon = new ArrayList<>();
         List<TuVung> list = getListTu(listTu);
         Collections.shuffle(list);
         int index;
-        for (int i = 0 ; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             index = new Random().nextInt(list.size());
-            if (i > 0){
-              for (int j = 0; j < listLuaChon.size();j++) {
-                  if (listLuaChon.get(j).getNoiDung().equals(list.get(index).getNoiDung())) {
-                      index = new Random().nextInt(list.size());
-                      j = 0;
-                  }
-              }
+            if (i > 0) {
+                for (int j = 0; j < listLuaChon.size(); j++) {
+                    if (listLuaChon.get(j).getNoiDung().equals(list.get(index).getNoiDung())) {
+                        index = new Random().nextInt(list.size());
+                        j = 0;
+                    }
+                }
             }
             listLuaChon.add(list.get(index));
         }
@@ -110,15 +123,15 @@ public class ChoiGameActivity extends AppCompatActivity {
         return listLuaChon;
     }
 
-    public static List<CauHoi> getCauHoiList(){
-        cauHoiList = new ArrayList<>();
-        for (int i = 0; i < 10; i++){
+    public static List<CauHoi> getCauHoiList() {
+        listCauHoi = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
             List<TuVung> luachon = randomLuachon();
             TuVung tuVung = luachon.get(new Random().nextInt(luachon.size()));
-            CauHoi cauHoi = new CauHoi(luachon,tuVung);
-            cauHoiList.add(cauHoi);
+            CauHoi cauHoi = new CauHoi(luachon, tuVung);
+            listCauHoi.add(cauHoi);
         }
-        return cauHoiList;
+        return listCauHoi;
     }
 
     private void initUI() {
@@ -126,13 +139,13 @@ public class ChoiGameActivity extends AppCompatActivity {
         igbYesNo = findViewById(R.id.igbYesNo);
         igbHome = findViewById(R.id.btnHomeGame);
         igbSetting = findViewById(R.id.btnSettingGame);
-        cauHoiList = new ArrayList<>();
+
     }
-    public static List<TuVung> getListTu(List<TuVung> list){
+
+    public static List<TuVung> getListTu(List<TuVung> list) {
         List<TuVung> listTu = new ArrayList<>();
-        for (int i = 0 ; i < list.size(); i++){
-            if (!list.get(i).getLoaiTu().getName().equals("Alphabet"))
-            {
+        for (int i = 0; i < list.size(); i++) {
+            if (!list.get(i).getLoaiTu().getName().equals("Alphabet")) {
                 listTu.add(list.get(i));
             }
         }
@@ -145,7 +158,7 @@ public class ChoiGameActivity extends AppCompatActivity {
         mpGame.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                mp.setVolume(0.2f,0.2f);
+                mp.setVolume(0.2f, 0.2f);
                 mp.start();
                 mp.setLooping(true);
             }

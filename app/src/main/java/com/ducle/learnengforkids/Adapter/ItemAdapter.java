@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ducle.learnengforkids.Module.Item;
 import com.ducle.learnengforkids.Module.LoaiTu;
 import com.ducle.learnengforkids.R;
 import com.squareup.picasso.Picasso;

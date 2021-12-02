@@ -79,7 +79,7 @@ public class UserDB {
                 if (user == null){
                     return;
                 }
-                if (list.isEmpty() || list == null){
+                if (list.isEmpty()){
                     return;
                 }
                 for (int i = 0; i < list.size(); i++){

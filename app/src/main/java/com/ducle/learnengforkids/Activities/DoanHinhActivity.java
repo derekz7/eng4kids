@@ -1,14 +1,11 @@
 package com.ducle.learnengforkids.Activities;
 
+import static com.ducle.learnengforkids.Activities.ChoiGameActivity.listCauHoi;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -18,35 +15,23 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.ducle.learnengforkids.Adapter.ObjAdapter;
 import com.ducle.learnengforkids.DialogSetting;
 import com.ducle.learnengforkids.FireBase.UserDB;
 import com.ducle.learnengforkids.Module.CauHoi;
-import com.ducle.learnengforkids.Module.TuVung;
-import com.ducle.learnengforkids.Module.User;
 import com.ducle.learnengforkids.PlayMusic;
 import com.ducle.learnengforkids.R;
 import com.ducle.learnengforkids.ToSpeak;
-import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 public class DoanHinhActivity extends AppCompatActivity {
     private final int timer = 20000;
@@ -55,7 +40,7 @@ public class DoanHinhActivity extends AppCompatActivity {
     private ImageView imgDapAn;
     private ProgressBar progressCount;
     private TextView tvNoiDung, tvDiem,tvCurrentQuestion;
-    private  List<CauHoi> cauHoiList = ChoiGameActivity.cauHoiList;
+    private  List<CauHoi> cauHoiList;
     private int currentQuestion = 0, score = 0, newScore = 0;
     private ObjAdapter luachonAdapter;
     private SharedPreferences sharedPreferences;
@@ -249,7 +234,7 @@ public class DoanHinhActivity extends AppCompatActivity {
         tvCurrentQuestion = findViewById(R.id.tvCurrentQuestion);
         db = new UserDB();
         toSpeak = new ToSpeak(this);
-        cauHoiList = new ArrayList<>();
+        cauHoiList = listCauHoi;
         luachonAdapter = new ObjAdapter(this);
     }
 
@@ -281,7 +266,6 @@ public class DoanHinhActivity extends AppCompatActivity {
             return;
         }
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams windowAttributes = window.getAttributes();
         windowAttributes.gravity = Gravity.CENTER;
         window.setAttributes(windowAttributes);
