@@ -1,5 +1,7 @@
 package com.ducle.learnengforkids.Activities;
 
+import static com.ducle.learnengforkids.Activities.MainMenuActivity.getAnimClick;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,6 +13,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +37,7 @@ public class ChoiGameActivity extends AppCompatActivity {
     private ImageButton igbHome, igbSetting;
     public static List<CauHoi> listCauHoi;
     public static List<CauDo> cauDoList;
+    private LinearLayout item1, item2;
     private CauDoDB cauDoDB;
     public static List<TuVung> listTu = MainMenuActivity.listTuVung;
     public static MediaPlayer mpGame;
@@ -61,18 +65,30 @@ public class ChoiGameActivity extends AppCompatActivity {
         igbYesNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                igbYesNo.startAnimation(MainMenuActivity.getAnimClick(v.getContext()));
+                item1.startAnimation(getAnimClick(v.getContext()));
                 PlayMusic.playClick(v.getContext());
-                startActivity(new Intent(ChoiGameActivity.this, YesNoActivity.class));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(ChoiGameActivity.this, YesNoActivity.class));
+                    }
+                },400);
+
             }
         });
         igbDoanHinh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                igbDoanHinh.startAnimation(MainMenuActivity.getAnimClick(v.getContext()));
+                item2.startAnimation(getAnimClick(v.getContext()));
                 PlayMusic.playClick(v.getContext());
-                Intent intent = new Intent(ChoiGameActivity.this, DoanHinhActivity.class);
-                startActivity(intent);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(ChoiGameActivity.this, DoanHinhActivity.class);
+                        startActivity(intent);
+                    }
+                },400);
+
             }
         });
         igbHome.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +151,8 @@ public class ChoiGameActivity extends AppCompatActivity {
     }
 
     private void initUI() {
+        item1 = findViewById(R.id.item1);
+        item2 = findViewById(R.id.item2);
         igbDoanHinh = findViewById(R.id.igbDoanHinh);
         igbYesNo = findViewById(R.id.igbYesNo);
         igbHome = findViewById(R.id.btnHomeGame);
@@ -182,5 +200,11 @@ public class ChoiGameActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mpGame.stop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mpGame.start();
     }
 }

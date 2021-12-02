@@ -20,4 +20,5 @@
     <string name="email" translatable="false">Email</string>
     <string name="typeUsername">Tên tài khoản</string>
     <string name="retypePass">Nhập lại mật khẩu</string>
+    <string name="timeout">Hết giờ !!!</string>
 </resources>

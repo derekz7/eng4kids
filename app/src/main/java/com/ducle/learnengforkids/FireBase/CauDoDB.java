@@ -26,16 +26,16 @@ public class CauDoDB {
     public CauDoDB() {
         database = FirebaseDatabase.getInstance();
         Ref = database.getReference("CauDo");
-        cauDoList = getAllCauDo();
+        cauDoList = new ArrayList<>();
     }
 
-    public void InsertCauDo(CauDo cauDo){
+    public void InsertCauDo(CauDo cauDo) {
         cauDo.setId(maxid);
         Ref.child(String.valueOf(cauDo.getId())).setValue(cauDo, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 if (error == null) {
-                    Log.d("Insert","Error");
+                    Log.d("Insert", "Error");
                 }
 
             }
@@ -43,30 +43,33 @@ public class CauDoDB {
 
     }
 
-    public List<CauDo> getAllCauDo(){
+    public List<CauDo> getAllCauDo() {
         cauDoList = new ArrayList<>();
-       Ref.addValueEventListener(new ValueEventListener() {
-           @Override
-           public void onDataChange(@NonNull DataSnapshot snapshot) {
+        Ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                cauDoList.clear();
                 maxid = (int) snapshot.getChildrenCount();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     CauDo cauDo = dataSnapshot.getValue(CauDo.class);
                     cauDoList.add(cauDo);
                 }
-           }
-           @Override
-           public void onCancelled(@NonNull DatabaseError error) {
+            }
 
-           }
-       });
-       return cauDoList;
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return cauDoList;
     }
-    public void updateData(){
+
+    public void updateData() {
         Ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 CauDo cauDo = snapshot.getValue(CauDo.class);
-                if (cauDo != null){
+                if (cauDo != null) {
                     cauDoList.add(cauDo);
                 }
             }
@@ -74,15 +77,15 @@ public class CauDoDB {
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 CauDo cauDo = snapshot.getValue(CauDo.class);
-                if (cauDo == null){
+                if (cauDo == null) {
                     return;
                 }
-                if (cauDoList.isEmpty()){
+                if (cauDoList.isEmpty()) {
                     return;
                 }
-                for (int i = 0; i < cauDoList.size(); i++){
-                    if (cauDo.getId() == cauDoList.get(i).getId()){
-                        cauDoList.set(i,cauDo);
+                for (int i = 0; i < cauDoList.size(); i++) {
+                    if (cauDo.getId() == cauDoList.get(i).getId()) {
+                        cauDoList.set(i, cauDo);
                     }
                 }
             }

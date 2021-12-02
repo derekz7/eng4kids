@@ -1,16 +1,24 @@
 package com.ducle.learnengforkids.Activities;
 
 import static com.ducle.learnengforkids.Activities.ChoiGameActivity.cauDoList;
+import static com.ducle.learnengforkids.Activities.ChoiGameActivity.mpGame;
+import static com.ducle.learnengforkids.Activities.MainMenuActivity.setAnim_button_click;
 
+import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -19,7 +27,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.ducle.learnengforkids.DialogSetting;
+import com.ducle.learnengforkids.FireBase.UserDB;
 import com.ducle.learnengforkids.Module.CauDo;
+import com.ducle.learnengforkids.PlayMusic;
 import com.ducle.learnengforkids.R;
 import com.ducle.learnengforkids.ToSpeak;
 import com.squareup.picasso.Picasso;
@@ -38,6 +49,9 @@ public class YesNoActivity extends AppCompatActivity {
     private int timer;
     private int currentQuestion = 0, score = 0;
     private ToSpeak speak;
+    private SharedPreferences sharedPreferences;
+    private String username = "";
+    private UserDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +60,7 @@ public class YesNoActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getData();
         initUI();
+        setViewUser();
         ViewQuestions();
         onClick();
     }
@@ -54,15 +69,52 @@ public class YesNoActivity extends AppCompatActivity {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAns(true);
-                speak.speak("Yes");
+                PlayMusic.playClick(v.getContext());
+                setAnim_button_click(btnYes);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        showAns(true);
+                        speak.speak("Yes");
+                    }
+                }, 400);
             }
         });
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAns(false);
-                speak.speak("No");
+                PlayMusic.playClick(v.getContext());
+                setAnim_button_click(btnNo);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        showAns(false);
+                        speak.speak("No");
+                    }
+                }, 400);
+
+            }
+        });
+        btnBackYN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setAnim_button_click(btnBackYN);
+                PlayMusic.playClick(v.getContext());
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 400);
+            }
+        });
+        btnSettingYN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setAnim_button_click(btnSettingYN);
+                PlayMusic.playClick(v.getContext());
+                DialogSetting dialogSetting = new DialogSetting(YesNoActivity.this);
+                dialogSetting.show(mpGame);
             }
         });
     }
@@ -72,6 +124,9 @@ public class YesNoActivity extends AppCompatActivity {
             //End
             Toast.makeText(YesNoActivity.this, "End", Toast.LENGTH_SHORT).show();
         } else {
+            btnNo.setVisibility(View.VISIBLE);
+            btnYes.setVisibility(View.VISIBLE);
+            progressTime.setVisibility(View.VISIBLE);
             CauDo cauDo = listCauDo.get(currentQuestion);
             String[] ans = new String[]{cauDo.getWrongAns(), cauDo.getTrueAns()};
             int rd = new Random().nextInt(ans.length);
@@ -79,6 +134,7 @@ public class YesNoActivity extends AppCompatActivity {
             txCauHoi.setTextColor(Color.BLACK);
             txCauHoi.setText(ans[rd]);
             Picasso.with(this).load(cauDo.getImgUrl()).into(imgWordView);
+            setCountDownTimer();
         }
     }
 
@@ -94,16 +150,17 @@ public class YesNoActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-
+                playSound(R.raw.gameover);
+                dialogTimeOut();
             }
-        };
+        }.start();
     }
 
     private void showAns(boolean check) {
         btnNo.setVisibility(View.GONE);
         btnYes.setVisibility(View.GONE);
         progressTime.setVisibility(View.GONE);
-//        count.cancel();
+        count.cancel();
         CauDo cauDo = listCauDo.get(currentQuestion);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -111,6 +168,7 @@ public class YesNoActivity extends AppCompatActivity {
                 if (cauDo.getTrueAns().equals(txCauHoi.getText().toString())) {
                     if (check) {
                         playSound(R.raw.success);
+                        score += 25;
                     } else {
                         playSound(R.raw.losing);
                     }
@@ -121,6 +179,7 @@ public class YesNoActivity extends AppCompatActivity {
                         playSound(R.raw.losing);
                     } else {
                         playSound(R.raw.success);
+                        score += 25;
                     }
                     txCauHoi.startAnimation(animBlink());
                     txCauHoi.setTextColor(Color.RED);
@@ -128,20 +187,27 @@ public class YesNoActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             txCauHoi.setText(cauDo.getTrueAns());
+                            speak.speak(txCauHoi.getText().toString());
                             txCauHoi.startAnimation(animBlink());
                             txCauHoi.setTextColor(Color.BLUE);
                         }
-                    },1500);
+                    }, 1500);
                 }
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        txScore.setText(String.valueOf(score));
+                        db.updateDiem(username, score);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("diem", String.valueOf(score));
+                        editor.apply();
+                        currentQuestion++;
+                        ViewQuestions();
+                    }
+                }, 4500);
+
             }
         }, 1500);
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                currentQuestion++;
-//                ViewQuestions();
-//            }
-//        }, 5000);
     }
 
 
@@ -157,10 +223,19 @@ public class YesNoActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        timer = 20;
+        mpGame.start();
+        timer = 20000;
+        db = new UserDB();
         listCauDo = cauDoList;
         Collections.shuffle(listCauDo);
         speak = new ToSpeak(this);
+    }
+
+    private void setViewUser() {
+        sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
+        username = sharedPreferences.getString("username", "");
+        score = Integer.parseInt(sharedPreferences.getString("diem", ""));
+        txScore.setText(String.valueOf(score));
     }
 
     private Animation animBlink() {
@@ -183,6 +258,78 @@ public class YesNoActivity extends AppCompatActivity {
                 sound.release();
             }
         });
+    }
+
+    private void refreshQuestion() {
+        Collections.shuffle(listCauDo);
+        ViewQuestions();
+    }
+
+    private void dialogTimeOut() {
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_timeout);
+        final ImageButton igbBack, btnReplay;
+        igbBack = dialog.findViewById(R.id.btnBack);
+        btnReplay = dialog.findViewById(R.id.btnReplay);
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        windowAttributes.windowAnimations = R.style.dialog_setting_anim;
+        window.setAttributes(windowAttributes);
+        dialog.setCancelable(false);
+
+        igbBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlayMusic.playClick(YesNoActivity.this);
+                setAnim_button_click(igbBack);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                        dialog.cancel();
+                    }
+                }, 400);
+
+            }
+        });
+
+        btnReplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlayMusic.playClick(YesNoActivity.this);
+                setAnim_button_click(btnReplay);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshQuestion();
+                        dialog.dismiss();
+                    }
+                }, 400);
+
+            }
+        });
+        dialog.show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (count != null) {
+            count.cancel();
+        }
+        mpGame.pause();
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
 }
