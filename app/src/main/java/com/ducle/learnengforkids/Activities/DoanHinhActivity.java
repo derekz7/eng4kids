@@ -1,10 +1,15 @@
 package com.ducle.learnengforkids.Activities;
 
 import static com.ducle.learnengforkids.Activities.ChoiGameActivity.listCauHoi;
+import static com.ducle.learnengforkids.Activities.ChoiGameActivity.mpGame;
+import static com.ducle.learnengforkids.Activities.MainMenuActivity.getAnimClick;
+import static com.ducle.learnengforkids.Activities.MainMenuActivity.setAnim_button_click;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -55,7 +60,7 @@ public class DoanHinhActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gamexemvachon);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        ChoiGameActivity.mpGame.start();
+        mpGame.start();
         initUI();
         setViewUser();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DoanHinhActivity.this, RecyclerView.HORIZONTAL, false);
@@ -70,7 +75,7 @@ public class DoanHinhActivity extends AppCompatActivity {
             @Override
             public void onObjectClick(int position, View v) {
                 PlayMusic.playClick(v.getContext());
-                v.startAnimation(MainMenuActivity.getAnimClick(v.getContext()));
+                v.startAnimation(getAnimClick(v.getContext()));
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -88,7 +93,7 @@ public class DoanHinhActivity extends AppCompatActivity {
         igbSpeakDH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainMenuActivity.setAnim_button_click(igbSpeakDH);
+                setAnim_button_click(igbSpeakDH);
                 PlayMusic.playClick(v.getContext());
                 toSpeak.speak(tvNoiDung.getText().toString());
             }
@@ -96,7 +101,7 @@ public class DoanHinhActivity extends AppCompatActivity {
         btnBacKDH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainMenuActivity.setAnim_button_click(btnBacKDH);
+                setAnim_button_click(btnBacKDH);
                 PlayMusic.playClick(v.getContext());
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -109,10 +114,10 @@ public class DoanHinhActivity extends AppCompatActivity {
         igbSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainMenuActivity.setAnim_button_click(igbSetting);
+                setAnim_button_click(igbSetting);
                 PlayMusic.playClick(v.getContext());
                 DialogSetting dialogSetting = new DialogSetting(DoanHinhActivity.this);
-                dialogSetting.show(ChoiGameActivity.mpGame);
+                dialogSetting.show(mpGame);
             }
         });
     }
@@ -268,6 +273,7 @@ public class DoanHinhActivity extends AppCompatActivity {
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         WindowManager.LayoutParams windowAttributes = window.getAttributes();
         windowAttributes.gravity = Gravity.CENTER;
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         window.setAttributes(windowAttributes);
         dialog.setCancelable(false);
 
@@ -275,7 +281,7 @@ public class DoanHinhActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PlayMusic.playClick(DoanHinhActivity.this);
-                MainMenuActivity.setAnim_button_click(igbReplay);
+                setAnim_button_click(igbReplay);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -291,7 +297,7 @@ public class DoanHinhActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PlayMusic.playClick(DoanHinhActivity.this);
-                MainMenuActivity.setAnim_button_click(igbReturn);
+                setAnim_button_click(igbReturn);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -308,8 +314,7 @@ public class DoanHinhActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        PlayMusic.playClick(this);
+
     }
 
     @Override
@@ -318,8 +323,6 @@ public class DoanHinhActivity extends AppCompatActivity {
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
-        ChoiGameActivity.mpGame.pause();
+        mpGame.pause();
     }
-
-
 }

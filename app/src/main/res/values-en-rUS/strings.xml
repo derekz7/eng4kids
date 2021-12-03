@@ -20,4 +20,5 @@
     <string name="checkConnmess">Please check your internet connection or try again later!</string>
     <string name="typeUsername">Username</string>
     <string name="retypePass">Re-enter password</string>
+    <string name="timeout">Time out !!!</string>
 </resources>

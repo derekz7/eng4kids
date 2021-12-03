@@ -8,6 +8,7 @@
         <item name="android:windowEnterAnimation">@anim/slide_up_dialog</item>
         <item name="android:windowExitAnimation">@anim/slide_down_dialog</item>
     </style>
+
     <style name="progressBarPink" parent="@style/Theme.AppCompat">
         <item name="colorAccent">#E91E63</item>
     </style>
