@@ -69,7 +69,7 @@ public class TuVungAdapter extends RecyclerView.Adapter<TuVungAdapter.TuVungView
             super(itemView);
             imgView = itemView.findViewById(R.id.img_Word);
             tvNoiDung = itemView.findViewById(R.id.tv_noiDungTu);
-            igbDel = itemView.findViewById(R.id.igbDelWord);
+
         }
     }
 

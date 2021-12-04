@@ -1,6 +1,8 @@
 package com.ducle.learnengforkids.Module;
 
-public class LoaiTu {
+import java.io.Serializable;
+
+public class LoaiTu implements Serializable {
     private int id;
     private String name, url;
 

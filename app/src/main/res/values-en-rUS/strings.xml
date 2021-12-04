@@ -21,4 +21,6 @@
     <string name="typeUsername">Username</string>
     <string name="retypePass">Re-enter password</string>
     <string name="timeout">Time out !!!</string>
+    <string name="huy">Cancel</string>
+    <string name="luu">Save</string>
 </resources>

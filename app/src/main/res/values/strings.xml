@@ -21,4 +21,6 @@
     <string name="typeUsername">Tên tài khoản</string>
     <string name="retypePass">Nhập lại mật khẩu</string>
     <string name="timeout">Hết giờ !!!</string>
+    <string name="huy">Huỷ</string>
+    <string name="luu">Lưu</string>
 </resources>

@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.ducle.learnengforkids.FireBase.LoaiTuDB;
 import com.ducle.learnengforkids.FireBase.UserDB;
 import com.ducle.learnengforkids.FireBase.WordDB;
 import com.ducle.learnengforkids.DialogSetting;
@@ -46,6 +47,7 @@ public class MainMenuActivity extends AppCompatActivity {
     public static LottieAnimationView anim_ballon;
     private ItemAdapter itemAdapter;
     private WordDB wordDB;
+    private LoaiTuDB loaiTuDB;
     public static List<LoaiTu> loaiTuList;
     public static List<TuVung> listTuVung, listTubyLoai;
     private TextView tvUsername, tvScore;
@@ -68,7 +70,7 @@ public class MainMenuActivity extends AppCompatActivity {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         rcv_menu_tudien.setLayoutManager(layoutManager);
 ////        gan gia tri
-        itemAdapter = new ItemAdapter(this, loaiTuList);
+        itemAdapter = new ItemAdapter(this,loaiTuList);
         rcv_menu_tudien.setAdapter(itemAdapter);
         final SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(rcv_menu_tudien);
@@ -112,7 +114,6 @@ public class MainMenuActivity extends AppCompatActivity {
                     public void run() {
                         listTubyLoai = getListTuVungbyLoai(loaiTuList.get(position));
                         Intent intent = new Intent(MainMenuActivity.this, DictionaryActivity.class);
-                        intent.putExtra("ID_ITEM", loaiTuList.get(position).getName());
                         startActivity(intent);
                     }
                 }, 500);
@@ -206,9 +207,10 @@ public class MainMenuActivity extends AppCompatActivity {
     private void getData() {
         userDB = new UserDB();
         wordDB = new WordDB();
+        loaiTuDB = new LoaiTuDB();
         userList = DangNhapActivity.userList;
         listTubyLoai = new ArrayList<>();
-        loaiTuList = wordDB.getListLoai();
+        loaiTuList = loaiTuDB.getListLoai();
         listTuVung = wordDB.getListTuVung();
         sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
         username = sharedPreferences.getString("username", "");

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background">
@@ -19,8 +20,8 @@
 
             <ImageButton
                 android:id="@+id/btnBackListWords"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:background="@drawable/item_shadow"
                 android:scaleType="centerInside"
                 android:src="@drawable/back"
@@ -36,7 +37,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.365"
                 app:layout_constraintStart_toEndOf="@+id/btnBackListWords"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -50,7 +52,6 @@
                 android:id="@+id/rcv_listTV"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layoutAnimation="@anim/layout_slide_up"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
@@ -58,19 +59,21 @@
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"/>
+                android:layout_marginEnd="5dp"
+                android:layoutAnimation="@anim/layout_slide_up" />
 
             <ImageButton
                 android:id="@+id/btnAddWord"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="@android:color/transparent"
+                android:background="@drawable/btn_shadow"
+                android:backgroundTint="#00C809"
                 android:scaleType="centerCrop"
-                android:src="@drawable/plus"
+                android:src="@drawable/ic_baseline_add_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

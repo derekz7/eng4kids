@@ -1,6 +1,5 @@
 package com.ducle.learnengforkids.FireBase;
 
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -9,8 +8,8 @@ import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+
 import com.ducle.learnengforkids.Module.LoaiTu;
-import com.ducle.learnengforkids.Module.TuVung;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -26,75 +25,48 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordDB {
+public class LoaiTuDB {
     private FirebaseDatabase database;
-    private DatabaseReference wordRef;
+    private DatabaseReference loaiRef;
     private StorageReference storeRef;
-    private List<TuVung> listTuVung;
+    private List<LoaiTu> listLoai;
 
-    public WordDB() {
+    public LoaiTuDB(){
         database = FirebaseDatabase.getInstance();
-        wordRef = database.getReference("Words");
+        loaiRef = database.getReference("LoaiTu");
         storeRef = FirebaseStorage.getInstance().getReference();
-        listTuVung = new ArrayList<>();
+        listLoai = new ArrayList<>();
     }
-
-    public List<TuVung> getListTuVung(){
-        listTuVung = new ArrayList<>();
-        wordRef.addValueEventListener(new ValueEventListener() {
+    public List<LoaiTu> getListLoai(){
+        listLoai = new ArrayList<>();
+        loaiRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listTuVung.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    TuVung tuVung = dataSnapshot.getValue(TuVung.class);
-                        listTuVung.add(tuVung);
+                listLoai.clear();
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    LoaiTu loaiTu = dataSnapshot.getValue(LoaiTu.class);
+                    listLoai.add(loaiTu);
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-        return listTuVung;
+        return listLoai;
     }
-
-
-
-    public List<TuVung> getListTubyLoai(LoaiTu loaiTu){
-        listTuVung = new ArrayList<>();
-        wordRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listTuVung.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    TuVung tuVung = dataSnapshot.getValue(TuVung.class);
-                    if (tuVung != null && tuVung.getLoaiTu().getName().equals(loaiTu.getName())){
-                        listTuVung.add(tuVung);
-                    }
-
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        return listTuVung;
-    }
-
-    public void upLoadToFireBase(Activity activity, Uri uri,String noiDung, LoaiTu loaiTu) {
+    public void upLoadToFireBase(Activity activity, Uri uri, int id, String name) {
         ProgressDialog pd = new ProgressDialog(activity);
         pd.setMessage("Loading...");
-        StorageReference fileRef = storeRef.child(loaiTu.getName()).child(noiDung + "." +getFileExtension(uri,activity));
+        StorageReference fileRef = storeRef.child("LoaiTu").child(name + "." +getFileExtension(uri,activity));
         fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        TuVung tuVung = new TuVung(noiDung,loaiTu,uri.toString());
-                        wordRef.child(tuVung.getNoiDung()).setValue(tuVung);
-                        Toast.makeText(activity, "Thêm từ mới thành công!", Toast.LENGTH_SHORT).show();
+                        LoaiTu loaiTu = new LoaiTu(id,name,uri.toString());
+                        loaiRef.child(String.valueOf(id)).setValue(loaiTu);
+                        Toast.makeText(activity, "Thêm loại từ thành công!", Toast.LENGTH_SHORT).show();
                         pd.dismiss();
                     }
                 });
@@ -117,8 +89,4 @@ public class WordDB {
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return  mime.getExtensionFromMimeType(cr.getType(mUri));
     }
-
-
-
-
 }
