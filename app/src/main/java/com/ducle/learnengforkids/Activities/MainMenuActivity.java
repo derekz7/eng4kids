@@ -114,6 +114,7 @@ public class MainMenuActivity extends AppCompatActivity {
                     public void run() {
                         listTubyLoai = getListTuVungbyLoai(loaiTuList.get(position));
                         Intent intent = new Intent(MainMenuActivity.this, DictionaryActivity.class);
+                        intent.putExtra("ID_ITEM",listTubyLoai.get(position).getLoaiTu().getName());
                         startActivity(intent);
                     }
                 }, 500);

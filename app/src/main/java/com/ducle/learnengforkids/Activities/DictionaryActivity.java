@@ -51,7 +51,6 @@ public class DictionaryActivity extends AppCompatActivity {
 
     }
 
-
     private void loadLayout() {
         objAdapter = new ObjAdapter(DictionaryActivity.this);
         objAdapter.setData(list);
@@ -61,9 +60,7 @@ public class DictionaryActivity extends AppCompatActivity {
         } else tv_Color.setVisibility(View.VISIBLE);
     }
 
-
     private void buttonClick() {
-
         objAdapter.setOnWordClickListener(new ObjAdapter.onObjectClickListener() {
             @Override
             public void onObjectClick(int position, View v) {
@@ -108,8 +105,7 @@ public class DictionaryActivity extends AppCompatActivity {
         tv_Color = findViewById(R.id.tv_namecolor);
         imgView = findViewById(R.id.imgWordView);
         rcv_alphabet = findViewById(R.id.rcv_alphabet);
-        Intent intent = getIntent();
-        id = intent.getStringExtra("ID_ITEM");
+        id = getIntent().getStringExtra("ID_ITEM");
         toSpeak = new ToSpeak(this);
     }
 
