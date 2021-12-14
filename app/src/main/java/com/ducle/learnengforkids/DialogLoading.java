@@ -2,19 +2,20 @@ package com.ducle.learnengforkids;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 
 
 public class DialogLoading {
-    private Activity activity;
+    private Context context;
     private Dialog dialog;
 
-    public DialogLoading(Activity activity) {
-        this.activity = activity;
+    public DialogLoading(Context context) {
+        this.context = context;
     }
 
     public void show(){
-        dialog = new Dialog(activity);
+        dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_loading);
         dialog.setCancelable(false);
         if (dialog.getWindow() != null)

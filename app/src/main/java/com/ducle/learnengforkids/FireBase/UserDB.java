@@ -28,7 +28,7 @@ public class UserDB {
     public UserDB() {
         database = FirebaseDatabase.getInstance();
         UserRef = database.getReference("User");
-        userList = getListUser();
+        userList = new ArrayList<>();
     }
 
     public void taoTaiKhoan(User user, Activity activity) {

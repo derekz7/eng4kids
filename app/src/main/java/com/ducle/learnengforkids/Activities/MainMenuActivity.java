@@ -88,7 +88,6 @@ public class MainMenuActivity extends AppCompatActivity {
                     rll.animate().setDuration(300).scaleX(0.75f).scaleY(0.75f).setInterpolator(new AccelerateInterpolator()).start();
                 }
             }
-
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -97,13 +96,9 @@ public class MainMenuActivity extends AppCompatActivity {
         eventClickButton();
         //music background
         playMusic();
-
-
     }
 
-
     private void eventClickButton() {
-
         itemAdapter.setOnItemClickListener(new ItemAdapter.onItemClickListener() {
             @Override
             public void onItemClick(int position, View v) {
@@ -122,8 +117,6 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-
-
         btnsetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +126,6 @@ public class MainMenuActivity extends AppCompatActivity {
                 dialogSetting.show(mpbackground);
             }
         });
-
 
         imbHocTA.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,8 +139,6 @@ public class MainMenuActivity extends AppCompatActivity {
                         rcv_menu_tudien.setVisibility(View.VISIBLE);
                     }
                 }, 1000);
-
-
             }
         });
         imbGame.setOnClickListener(new View.OnClickListener() {
@@ -179,9 +169,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 }, 800);
             }
         });
-
     }
-
 
     private void initUI() {
         tvUsername = findViewById(R.id.tvUser);

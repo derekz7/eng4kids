@@ -223,10 +223,20 @@ public class QuanLyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = edtName.getText().toString().trim();
                 if (imgAnh != null && name.length() != 0){
+                    DialogLoading dialogLoading = new DialogLoading(v.getContext());
+                    dialog.show();
                     db.upLoadToFireBase(QuanLyActivity.this,imgUri,loaiTuList.size()+1,name);
                     getData();
                     hideItem();
-                    dialog.dismiss();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            dialogLoading.dismissDialog();
+                            dialog.dismiss();
+                            finish();
+                        }
+                    },1500);
+
                 }else {
                     Toast.makeText(QuanLyActivity.this, "Vui lòng nhập tên và chọn hình ảnh!" ,Toast.LENGTH_SHORT).show();
                 }

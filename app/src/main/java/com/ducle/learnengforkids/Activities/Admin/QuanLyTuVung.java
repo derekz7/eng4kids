@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -16,11 +17,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.ducle.learnengforkids.Adapter.TuVungAdapter;
+import com.ducle.learnengforkids.DialogLoading;
 import com.ducle.learnengforkids.FireBase.WordDB;
 import com.ducle.learnengforkids.Module.LoaiTu;
 import com.ducle.learnengforkids.Module.TuVung;
@@ -115,13 +119,22 @@ public class QuanLyTuVung extends AppCompatActivity {
             public void onClick(View v) {
                 String name = edtName.getText().toString().trim();
                 if (imgAnh != null && name.length() != 0) {
-                    db.upLoadToFireBase(QuanLyTuVung.this, imgUri, name,loaiTu);
+                    DialogLoading dialogLoading = new DialogLoading(v.getContext());
+                    dialogLoading.show();
+                    db.upLoadToFireBase(QuanLyTuVung.this, imgUri, name, loaiTu);
                     getData();
                     tuVungAdapter.setData(tuVungList);
-                    finish();
-                    dialog.dismiss();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            dialogLoading.dismissDialog();
+                            dialog.dismiss();
+                            finish();
+                        }
+                    }, 1500);
+
                 } else {
-                    Toast.makeText(QuanLyTuVung.this, "Vui lòng nhập tên và chọn hình ảnh!", Toast.LENGTH_SHORT).show();
+                    edtName.setError("Vui lòng nhập nội dung và chọn hình ảnh");
                 }
 
             }

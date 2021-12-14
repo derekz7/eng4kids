@@ -4,11 +4,14 @@ package com.ducle.learnengforkids.FireBase;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.net.Uri;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+
+import com.ducle.learnengforkids.DialogLoading;
 import com.ducle.learnengforkids.Module.LoaiTu;
 import com.ducle.learnengforkids.Module.TuVung;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -82,10 +85,8 @@ public class WordDB {
         return listTuVung;
     }
 
-    public void upLoadToFireBase(Activity activity, Uri uri,String noiDung, LoaiTu loaiTu) {
-        ProgressDialog pd = new ProgressDialog(activity);
-        pd.setMessage("Loading...");
-        StorageReference fileRef = storeRef.child(loaiTu.getName()).child(noiDung + "." +getFileExtension(uri,activity));
+    public void upLoadToFireBase(Context context, Uri uri, String noiDung, LoaiTu loaiTu) {
+        StorageReference fileRef = storeRef.child(loaiTu.getName()).child(noiDung + "." +getFileExtension(uri,context));
         fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -94,26 +95,26 @@ public class WordDB {
                     public void onSuccess(Uri uri) {
                         TuVung tuVung = new TuVung(noiDung,loaiTu,uri.toString());
                         wordRef.child(tuVung.getNoiDung()).setValue(tuVung);
-                        Toast.makeText(activity, "Thêm từ mới thành công!", Toast.LENGTH_SHORT).show();
-                        pd.dismiss();
+                        Toast.makeText(context, "Thêm từ mới thành công!", Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                pd.show();
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                pd.dismiss();
-                Toast.makeText(activity, "Upload Failed!", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(context, "Upload Failed!", Toast.LENGTH_SHORT).show();
             }
         });
     }
-    private String getFileExtension(Uri mUri, Activity activity){
-        ContentResolver cr = activity.getContentResolver();
+    private String getFileExtension(Uri mUri, Context context){
+        ContentResolver cr = context.getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return  mime.getExtensionFromMimeType(cr.getType(mUri));
     }

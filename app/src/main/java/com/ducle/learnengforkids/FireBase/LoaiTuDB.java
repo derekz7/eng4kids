@@ -55,8 +55,6 @@ public class LoaiTuDB {
         return listLoai;
     }
     public void upLoadToFireBase(Activity activity, Uri uri, int id, String name) {
-        ProgressDialog pd = new ProgressDialog(activity);
-        pd.setMessage("Loading...");
         StorageReference fileRef = storeRef.child("LoaiTu").child(name + "." +getFileExtension(uri,activity));
         fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -67,19 +65,17 @@ public class LoaiTuDB {
                         LoaiTu loaiTu = new LoaiTu(id,name,uri.toString());
                         loaiRef.child(String.valueOf(id)).setValue(loaiTu);
                         Toast.makeText(activity, "Thêm loại từ thành công!", Toast.LENGTH_SHORT).show();
-                        pd.dismiss();
                     }
                 });
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                pd.show();
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                pd.dismiss();
                 Toast.makeText(activity, "Upload Failed!", Toast.LENGTH_SHORT).show();
             }
         });

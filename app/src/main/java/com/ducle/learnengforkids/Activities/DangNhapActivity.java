@@ -48,9 +48,8 @@ public class DangNhapActivity extends AppCompatActivity {
     private MediaPlayer mpbg;
     private VideoView videoBg;
     private Animation alpha_layout, fade_out, fade_in;
-    public static List<TuVung> tuVungList;
+
     public static List<User> userList;
-    private WordDB wdb;
     private DialogLoading dialogLoading;
 
 
@@ -249,10 +248,8 @@ public class DangNhapActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        wdb = new WordDB();
         userDB = new UserDB();
         userList = userDB.getListUser();
-        tuVungList = wdb.getListTuVung();
         sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
         edtUsername.setText(sharedPreferences.getString("username", ""));
         edtMatKhau.setText(sharedPreferences.getString("password", ""));

@@ -40,11 +40,11 @@
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/activity_splash.xml" value="0.22239583333333332" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/activity_yesno.xml" value="0.23645833333333333" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/activity_yesnogame.xml" value="0.176" />
-        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_exit.xml" value="0.24010416666666667" />
-        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_loading.xml" value="0.4" />
+        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_exit.xml" value="0.176" />
+        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_loading.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_newloaitu.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_score.xml" value="0.152" />
-        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_setting.xml" value="0.152" />
+        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_setting.xml" value="0.176" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_themtumoi.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_timeout.xml" value="0.176" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/fragment_gameyesno.xml" value="0.176" />

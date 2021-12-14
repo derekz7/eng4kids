@@ -41,7 +41,6 @@ public class WatchVideoActicity extends YouTubeBaseActivity {
     private ImageButton btnhome, btnsetting, btnspeak, btnmute;
     public static String API_KEY = "AIzaSyCntiH1cgw2RQRePto4Bto1BzLZzTk4rFQ";
     private String ID_PLAYLIST = "PLMakVDXRH33FN6-i1BMa0YeTp4qroBG42";
-//    https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLMakVDXRH33FN6-i1BMa0YeTp4qroBG42&key=AIzaSyCntiH1cgw2RQRePto4Bto1BzLZzTk4rFQ
     public String URL = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + ID_PLAYLIST + "&key=" + API_KEY + "&maxResults=50";
     private RecyclerView rcv_playlist;
     private VideoAdapter videoAdapter;
@@ -95,7 +94,7 @@ public class WatchVideoActicity extends YouTubeBaseActivity {
             public void onClick(View v) {
                 MainMenuActivity.setAnim_button_click(btnsetting);
                 PlayMusic.playClick(v.getContext());
-               dialogSetting.show(MainMenuActivity.mpbackground);
+                dialogSetting.show(MainMenuActivity.mpbackground);
             }
         });
 
@@ -183,12 +182,9 @@ public class WatchVideoActicity extends YouTubeBaseActivity {
                 public void run() {
                     dialogLoading.dismissDialog();
                 }
-            },3000);
-
+            },2000);
             super.onPostExecute(unused);
         }
     }
-
-   
 
 }
