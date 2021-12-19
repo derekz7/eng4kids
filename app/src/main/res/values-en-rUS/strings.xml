@@ -23,4 +23,6 @@
     <string name="timeout">Time out !!!</string>
     <string name="huy">Cancel</string>
     <string name="luu">Save</string>
+    <string name="sua">Edit</string>
+    <string name="xoa">Delete</string>
 </resources>

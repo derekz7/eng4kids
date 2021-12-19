@@ -26,6 +26,7 @@
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/drawable/seekbar_style.xml" value="0.2526041666666667" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout-v21/activity_login_.xml" value="0.23645833333333333" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout-v21/row_alphabet.xml" value="0.24010416666666667" />
+        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout-v21/row_user.xml" value="0.23645833333333333" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/activity_choigame.xml" value="0.152" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/activity_dang_ki.xml" value="0.152" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/activity_dangnhap.xml" value="0.2" />
@@ -33,7 +34,7 @@
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/activity_gameyesno.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/activity_login_.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/activity_play_video.xml" value="0.24010416666666667" />
-        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/activity_qlnguoidung.xml" value="0.536" />
+        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/activity_qlnguoidung.xml" value="0.176" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/activity_qltuvung.xml" value="0.152" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/activity_quanly.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/activity_signup.xml" value="0.2" />
@@ -45,7 +46,7 @@
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_newloaitu.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_score.xml" value="0.152" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_setting.xml" value="0.176" />
-        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_themtumoi.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_themtumoi.xml" value="0.176" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/dialog_timeout.xml" value="0.176" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/fragment_gameyesno.xml" value="0.176" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/item_menudictionary.xml" value="0.176" />
@@ -55,9 +56,10 @@
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/layout_themtumoi.xml" value="0.136" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/row_alphabet.xml" value="0.24010416666666667" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/row_tuvung.xml" value="0.4" />
-        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/row_user.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/row_user.xml" value="0.152" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/row_videoyoutube.xml" value="0.24010416666666667" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/layout/splash_screen.xml" value="0.136" />
+        <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/menu/menu_edit.xml" value="0.23645833333333333" />
         <entry key="..\:/AndroidStudioProjects/LearnEngforKids/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.25625" />
       </map>
     </option>

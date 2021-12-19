@@ -7,21 +7,21 @@
     android:background="@drawable/background">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/forestback">
+        android:background="@drawable/forestback"
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_height="wrap_content">
+            android:layout_marginTop="5dp">
 
             <ImageButton
                 android:id="@+id/btnBackListUser"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:background="@drawable/item_shadow"
                 android:scaleType="centerInside"
                 android:src="@drawable/back"
@@ -36,6 +36,7 @@
                 android:layout_marginStart="10dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/dsuser"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/btnBackListUser"
@@ -54,22 +55,24 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <EditText
+                    android:id="@+id/edtKeyWord"
                     android:layout_width="wrap_content"
-                    android:maxWidth="300dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:elevation="8dp"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
                     android:background="@drawable/corner_shape"
+                    android:elevation="8dp"
                     android:fontFamily="@font/sanfancisco"
                     android:hint="Nhập tên người dùng"
+                    android:inputType="textPersonName"
+                    android:maxWidth="300dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
                     tools:targetApi="lollipop" />
 
                 <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:id="@+id/igbFind"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="2dp"
                     android:background="@drawable/item_shadow"
@@ -83,22 +86,18 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_marginHorizontal="10dp"
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/lv_listUser"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layoutAnimation="@anim/layout_slide_up"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp" />
+                android:layout_marginVertical="15dp"
+                android:layoutAnimation="@anim/layout_slide_up" />
 
             <ImageButton
                 android:id="@+id/btnAddUser"

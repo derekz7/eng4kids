@@ -51,6 +51,7 @@ public class QuanLyActivity extends AppCompatActivity {
     private RecyclerView rcvLoai;
     private ItemAdapter itemAdapter;
     private List<LoaiTu> loaiTuList;
+    public static List<TuVung> listTu;
     private LoaiTuDB db;
     private WordDB wordDB;
     public static MediaPlayer mp;
@@ -82,6 +83,7 @@ public class QuanLyActivity extends AppCompatActivity {
         db = new LoaiTuDB();
         wordDB = new WordDB();
         loaiTuList = db.getListLoai();
+        listTu = wordDB.getListTuVung();
     }
 
     private void onClick() {
@@ -223,15 +225,12 @@ public class QuanLyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = edtName.getText().toString().trim();
                 if (imgAnh != null && name.length() != 0){
-                    DialogLoading dialogLoading = new DialogLoading(v.getContext());
-                    dialog.show();
                     db.upLoadToFireBase(QuanLyActivity.this,imgUri,loaiTuList.size()+1,name);
                     getData();
                     hideItem();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            dialogLoading.dismissDialog();
                             dialog.dismiss();
                             finish();
                         }

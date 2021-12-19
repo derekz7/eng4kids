@@ -168,7 +168,6 @@ public class DangNhapActivity extends AppCompatActivity {
         }else {
             if (userDB.checkUsername(username)) {
                 userDB.taoTaiKhoan(new User(username,password), DangNhapActivity.this);
-                userDB.reloadData(userList);
                 dialogLoading.dismissDialog();
                 hideSignUp();
             } else {

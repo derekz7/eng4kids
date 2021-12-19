@@ -10,10 +10,12 @@ import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.ducle.learnengforkids.DialogLoading;
 import com.ducle.learnengforkids.Module.LoaiTu;
 import com.ducle.learnengforkids.Module.TuVung;
+import com.ducle.learnengforkids.Module.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -42,7 +44,7 @@ public class WordDB {
         listTuVung = new ArrayList<>();
     }
 
-    public List<TuVung> getListTuVung(){
+    public List<TuVung> getListTuVung() {
         listTuVung = new ArrayList<>();
         wordRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -50,9 +52,10 @@ public class WordDB {
                 listTuVung.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     TuVung tuVung = dataSnapshot.getValue(TuVung.class);
-                        listTuVung.add(tuVung);
+                    listTuVung.add(tuVung);
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -62,38 +65,25 @@ public class WordDB {
     }
 
 
-
-    public List<TuVung> getListTubyLoai(LoaiTu loaiTu){
-        listTuVung = new ArrayList<>();
-        wordRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listTuVung.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    TuVung tuVung = dataSnapshot.getValue(TuVung.class);
-                    if (tuVung != null && tuVung.getLoaiTu().getName().equals(loaiTu.getName())){
-                        listTuVung.add(tuVung);
-                    }
-
-                }
+    public List<TuVung> getListTubyLoai(List<TuVung> list, LoaiTu loaiTu) {
+        List<TuVung> listTu = new ArrayList<>();
+        for (TuVung tuVung : list) {
+            if (tuVung.getLoaiTu().getId() == loaiTu.getId()) {
+                listTu.add(tuVung);
             }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        return listTuVung;
+        }
+        return listTu;
     }
 
     public void upLoadToFireBase(Context context, Uri uri, String noiDung, LoaiTu loaiTu) {
-        StorageReference fileRef = storeRef.child(loaiTu.getName()).child(noiDung + "." +getFileExtension(uri,context));
+        StorageReference fileRef = storeRef.child(loaiTu.getName()).child(noiDung + "." + getFileExtension(uri, context));
         fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        TuVung tuVung = new TuVung(noiDung,loaiTu,uri.toString());
+                        TuVung tuVung = new TuVung(noiDung, loaiTu, uri.toString());
                         wordRef.child(tuVung.getNoiDung()).setValue(tuVung);
                         Toast.makeText(context, "Thêm từ mới thành công!", Toast.LENGTH_SHORT).show();
 
@@ -113,13 +103,55 @@ public class WordDB {
             }
         });
     }
-    private String getFileExtension(Uri mUri, Context context){
+
+    private String getFileExtension(Uri mUri, Context context) {
         ContentResolver cr = context.getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return  mime.getExtensionFromMimeType(cr.getType(mUri));
+        return mime.getExtensionFromMimeType(cr.getType(mUri));
     }
 
+    public void deleteTuVung(Context context, TuVung tuVung) {
+        wordRef.child(tuVung.getNoiDung()).removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                Toast.makeText(context, "Delete success", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
+    public void updateImg(Context context, Uri uri, TuVung tuVung, LoaiTu loaiTu) {
+        StorageReference fileRef = storeRef.child(loaiTu.getName()).child(tuVung.getNoiDung() + "." + getFileExtension(uri, context));
+        fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        tuVung.setImgUrl(uri.toString());
+                        Toast.makeText(context, "Update success", Toast.LENGTH_SHORT).show();
+//                        wordRef.child(tuVung.getNoiDung()).updateChildren(tuVung.toMap(), new DatabaseReference.CompletionListener() {
+//                            @Override
+//                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//
+//                            }
+//                        });
+                    }
+                });
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Toast.makeText(context, "Upload Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
 
 }

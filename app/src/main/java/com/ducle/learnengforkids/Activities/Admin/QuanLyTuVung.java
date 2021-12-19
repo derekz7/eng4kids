@@ -1,7 +1,10 @@
 package com.ducle.learnengforkids.Activities.Admin;
 
+import static com.ducle.learnengforkids.Activities.Admin.QuanLyActivity.listTu;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -16,9 +19,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +34,7 @@ import com.ducle.learnengforkids.FireBase.WordDB;
 import com.ducle.learnengforkids.Module.LoaiTu;
 import com.ducle.learnengforkids.Module.TuVung;
 import com.ducle.learnengforkids.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -70,6 +76,14 @@ public class QuanLyTuVung extends AppCompatActivity {
                 dialog_themTuMoi();
             }
         });
+        tuVungAdapter.setOnItemClick(new TuVungAdapter.onItemCLickListener() {
+            @Override
+            public void onItemClick(int pos, View view) {
+                TuVung tuVung = tuVungList.get(pos);
+                dialog_suaTuVung(tuVung);
+            }
+        });
+
     }
 
     private void init() {
@@ -82,7 +96,8 @@ public class QuanLyTuVung extends AppCompatActivity {
     private void getData() {
         db = new WordDB();
         loaiTu = (LoaiTu) getIntent().getSerializableExtra("LoaiTu");
-        tuVungList = db.getListTubyLoai(loaiTu);
+        Toast.makeText(this, ""+loaiTu.getName(), Toast.LENGTH_SHORT).show();
+        tuVungList = db.getListTubyLoai(listTu,loaiTu);
     }
 
     public void dialog_themTuMoi() {
@@ -149,6 +164,100 @@ public class QuanLyTuVung extends AppCompatActivity {
             }
         });
         dialog.show();
+
+    }
+
+    public void dialog_suaTuVung(TuVung tuVung) {
+        Dialog dialogSua = new Dialog(this);
+        dialogSua.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogSua.setContentView(R.layout.dialog_themtumoi);
+        Button btnSave, btnCancel, btnOpenLib;
+        TextView tv_Title = dialogSua.findViewById(R.id.tvTitle);
+        tv_Title.setText(tuVung.getNoiDung());
+        EditText edtName = dialogSua.findViewById(R.id.editNoiDung);
+        edtName.setText(tuVung.getNoiDung());
+        edtName.setEnabled(false);
+        imgAnh = dialogSua.findViewById(R.id.imgAnh);
+        Picasso.with(this).load(tuVung.getImgUrl()).into(imgAnh);
+        btnOpenLib = dialogSua.findViewById(R.id.btnChonAnh);
+        btnSave = dialogSua.findViewById(R.id.igbSave);
+        btnCancel = dialogSua.findViewById(R.id.igbCancel);
+        btnCancel.setText(R.string.xoa);
+        Window window = dialogSua.getWindow();
+        if (window == null) {
+            return;
+        }
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        windowAttributes.windowAnimations = R.style.Dialog_Animations;
+        window.setAttributes(windowAttributes);
+        dialogSua.setCancelable(true);
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(QuanLyTuVung.this);
+                builder.setIcon(R.drawable.cancel);
+                builder.setTitle("Bạn có thực sự muốn xoá");
+                builder.setMessage("Việc xoá dữ liệu sẽ không thể hoàn tác!");
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        tuVungList.remove(tuVung);
+                        db.deleteTuVung(QuanLyTuVung.this,tuVung);
+                        tuVungList = db.getListTuVung();
+                        tuVungAdapter.setData(tuVungList);
+                        dialog.dismiss();
+                        dialogSua.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+        });
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onClick(View v) {
+                if (imgAnh != null) {
+                    DialogLoading dialogLoading = new DialogLoading(v.getContext());
+                    dialogLoading.show();
+                    db.updateImg(QuanLyTuVung.this, imgUri, tuVung, loaiTu);
+                    getData();
+                    tuVungAdapter.setData(tuVungList);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            dialogLoading.dismissDialog();
+                            dialogSua.dismiss();
+                            finish();
+                        }
+                    }, 1500);
+
+                } else {
+                    Toast.makeText(QuanLyTuVung.this, "Vui long chon hinh anh", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        btnOpenLib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent();
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent, 2);
+            }
+        });
+        dialogSua.show();
 
     }
 

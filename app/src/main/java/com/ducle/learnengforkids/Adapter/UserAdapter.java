@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,10 +20,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     private Context context;
     private List<User> userList;
+    private onItemCLickListener mListener;
 
-    public UserAdapter(Context context, List<User> userList) {
+    public UserAdapter(Context context, List<User> userList, onItemCLickListener listener) {
         this.context = context;
         this.userList = userList;
+        this.mListener = listener;
+    }
+    public interface onItemCLickListener{
+        void onClickDeleteItem(User user);
     }
 
     public void setData(List<User> list){
@@ -44,8 +50,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         if (user == null) {
             return;
         }
-        holder.tv_username.setText("username: "+user.getUsername());
-        holder.tvPass.setText("pass: "+user.getMatKhau());
+        holder.tv_username.setText(user.getUsername());
+        holder.tvPass.setText("password: "+user.getMatKhau());
+        holder.igbXoaUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onClickDeleteItem(user);
+            }
+        });
     }
 
     @Override
@@ -58,11 +70,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     public class UserViewHolder extends RecyclerView.ViewHolder {
         private TextView tv_username, tvPass;
+        private ImageButton igbXoaUser;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_username = itemView.findViewById(R.id.tv_username);
-            tvPass = itemView.findViewById(R.id.tvPass);
+            tvPass = itemView.findViewById(R.id.tv_pass);
+            igbXoaUser = itemView.findViewById(R.id.igbXoaUser);
         }
     }
 }

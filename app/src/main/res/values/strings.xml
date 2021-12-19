@@ -23,4 +23,6 @@
     <string name="timeout">Hết giờ !!!</string>
     <string name="huy">Huỷ</string>
     <string name="luu">Lưu</string>
+    <string name="sua">Sửa</string>
+    <string name="xoa">Xoá</string>
 </resources>

@@ -1,13 +1,17 @@
 package com.ducle.learnengforkids.FireBase;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.ducle.learnengforkids.Adapter.UserAdapter;
 import com.ducle.learnengforkids.DialogLoading;
+import com.ducle.learnengforkids.Module.TuVung;
 import com.ducle.learnengforkids.Module.User;
 
 import com.google.firebase.database.ChildEventListener;
@@ -61,37 +65,42 @@ public class UserDB {
         });
         return userList;
     }
-
+    @SuppressLint("NotifyDataSetChanged")
     public void reloadData(List<User> list){
+
         UserRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                User user = snapshot.getValue(User.class);
-                if (user != null){
-                    list.add(user);
-                }
 
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 User user = snapshot.getValue(User.class);
-                if (user == null){
-                    return;
-                }
-                if (list.isEmpty()){
+                if (user == null || list.isEmpty()){
                     return;
                 }
                 for (int i = 0; i < list.size(); i++){
                     if (user.getUsername().equals(list.get(i).getUsername())){
                         list.set(i,user);
+                        break;
                     }
                 }
             }
 
+
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+                User user = snapshot.getValue(User.class);
+                if (user == null){
+                    return;
+                }
+                for (int i = 0; i < list.size(); i++){
+                    if (user.getUsername().equals(list.get(i).getUsername())){
+                        list.remove(list.get(i));
+                        break;
+                    }
+                }
             }
 
             @Override
@@ -105,6 +114,7 @@ public class UserDB {
             }
         });
     }
+
 
     public boolean checkUsername(String username) {
         boolean kt = true;
@@ -138,23 +148,14 @@ public class UserDB {
         }
         return user;
     }
-    public User getUser(String username){
-        final User[] userLog = {new User()};
-        UserRef.addValueEventListener(new ValueEventListener() {
+
+    public void deleteUser(Context context,User user){
+        UserRef.child(user.getUsername()).removeValue(new DatabaseReference.CompletionListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot: snapshot.getChildren()){
-                    User user = dataSnapshot.getValue(User.class);
-                    if (user != null && user.getUsername().equals(username)){
-                        userLog[0] = user;
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                Toast.makeText(context, "Delete success", Toast.LENGTH_SHORT).show();
             }
         });
-        return userLog[0];
     }
 
 }

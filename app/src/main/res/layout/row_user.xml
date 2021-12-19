@@ -1,73 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/corner_shape"
+    android:elevation="10dp"
+    android:layout_marginBottom="10dp"
     android:layout_marginHorizontal="10dp"
-    android:background="@drawable/dialog_bg">
+    tools:targetApi="lollipop">
 
-
-    <TextView
-        android:id="@+id/tv_username"
+    <LinearLayout
+        android:id="@+id/linearLayout6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginStart="16dp"
-        android:fontFamily="@font/kitto"
-        android:gravity="center"
-        android:text="Username"
-        android:textColor="@color/milk"
-        android:textSize="30sp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnEditUser"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.272" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tvPass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/kitto"
-        android:gravity="center"
-        android:text="pass"
-        android:textColor="@color/milk"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnEditUser"
-        app:layout_constraintHorizontal_bias="0.647"
-        app:layout_constraintStart_toEndOf="@+id/tv_username"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.419" />
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sanfancisco"
+            android:gravity="center"
+            android:text="Username"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/tv_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/sanfancisco"
+            android:gravity="center"
+            android:text="Password: 123456"
+            android:textColor="#858585"
+            android:textSize="15sp" />
+
+    </LinearLayout>
 
     <ImageButton
-        android:id="@+id/btnEditUser"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/btn_shadow"
-        android:scaleType="centerInside"
-        android:src="@drawable/edit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.906"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.454" />
-
-    <ImageButton
-        android:id="@+id/btnDelUser"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:id="@+id/igbXoaUser"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@android:color/transparent"
         android:scaleType="centerCrop"
         android:src="@drawable/cancel"
-        android:background="@drawable/btn_shadow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.644"
-        app:layout_constraintStart_toEndOf="@+id/btnEditUser"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.454" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

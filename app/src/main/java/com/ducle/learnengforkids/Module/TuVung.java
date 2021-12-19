@@ -1,5 +1,8 @@
 package com.ducle.learnengforkids.Module;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TuVung {
     private String noiDung;
     private LoaiTu loaiTu;
@@ -39,4 +42,9 @@ public class TuVung {
         this.imgUrl = imgUrl;
     }
 
+    public Map<String,Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("imgUrl",imgUrl);
+        return result;
+    }
 }

@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.ducle.learnengforkids.Module.TuVung;
 import com.ducle.learnengforkids.R;
 import com.squareup.picasso.Picasso;
@@ -23,8 +22,14 @@ public class TuVungAdapter extends RecyclerView.Adapter<TuVungAdapter.TuVungView
 
     private Context mcontext;
     private List<TuVung> listTu;
+    private onItemCLickListener mListener;
 
-
+    public interface onItemCLickListener{
+        void onItemClick(int pos, View view);
+    }
+    public void setOnItemClick(onItemCLickListener listener){
+        this.mListener = listener;
+    }
     public TuVungAdapter(Context mcontext) {
         this.mcontext = mcontext;
     }
@@ -39,7 +44,7 @@ public class TuVungAdapter extends RecyclerView.Adapter<TuVungAdapter.TuVungView
     public TuVungViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_tuvung,parent,false);
 
-        return new TuVungViewHolder(view);
+        return new TuVungViewHolder(view,mListener);
     }
 
     @Override
@@ -48,7 +53,7 @@ public class TuVungAdapter extends RecyclerView.Adapter<TuVungAdapter.TuVungView
         if (tuVung == null) {
             return;
         }
-        Glide.with(mcontext).load(tuVung.getImgUrl()).into(holder.imgView);
+        Picasso.with(mcontext).load(tuVung.getImgUrl()).into(holder.imgView);
         holder.tvNoiDung.setText(tuVung.getNoiDung());
     }
 
@@ -63,13 +68,22 @@ public class TuVungAdapter extends RecyclerView.Adapter<TuVungAdapter.TuVungView
     public class TuVungViewHolder extends RecyclerView.ViewHolder{
         private ImageView imgView;
         private TextView tvNoiDung;
-        private ImageButton igbDel;
 
-        public TuVungViewHolder(@NonNull View itemView) {
+        public TuVungViewHolder(@NonNull View itemView, onItemCLickListener listener) {
             super(itemView);
             imgView = itemView.findViewById(R.id.img_Word);
             tvNoiDung = itemView.findViewById(R.id.tv_noiDungTu);
-
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position,v);
+                        }
+                    }
+                }
+            });
         }
     }
 
