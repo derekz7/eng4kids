@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
@@ -42,6 +44,7 @@ import com.ducle.learnengforkids.FireBase.LoaiTuDB;
 import com.ducle.learnengforkids.FireBase.WordDB;
 import com.ducle.learnengforkids.Module.LoaiTu;
 import com.ducle.learnengforkids.Module.TuVung;
+import com.ducle.learnengforkids.PlayMusic;
 import com.ducle.learnengforkids.R;
 import java.util.List;
 
@@ -115,6 +118,32 @@ public class QuanLyActivity extends AppCompatActivity {
                 Intent intent = new Intent(QuanLyActivity.this, QuanLyTuVung.class);
                 intent.putExtra("LoaiTu",loaiTuList.get(position));
                 startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongCLick(int pos, View v) {
+                LoaiTu loaiTu = loaiTuList.get(pos);
+                AlertDialog.Builder builder = new AlertDialog.Builder(QuanLyActivity.this);
+                builder.setIcon(R.drawable.cancel);
+                builder.setTitle("Bạn có thực sự muốn xoá");
+                builder.setMessage("Việc xoá dữ liệu sẽ không thể hoàn tác!");
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        loaiTuList.remove(loaiTu);
+                        db.deleteLoaiTu(QuanLyActivity.this,loaiTu);
+                        itemAdapter.setData(loaiTuList);
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
             }
         });
         igbBack.setOnClickListener(new View.OnClickListener() {
@@ -224,7 +253,7 @@ public class QuanLyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = edtName.getText().toString().trim();
-                if (imgAnh != null && name.length() != 0){
+                if (imgAnh != null && name.length() != 0 && imgUri != null){
                     db.upLoadToFireBase(QuanLyActivity.this,imgUri,loaiTuList.size()+1,name);
                     getData();
                     hideItem();

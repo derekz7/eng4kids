@@ -3,13 +3,16 @@ package com.ducle.learnengforkids.FireBase;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.net.Uri;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.ducle.learnengforkids.Module.LoaiTu;
+import com.ducle.learnengforkids.Module.TuVung;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -84,5 +87,13 @@ public class LoaiTuDB {
         ContentResolver cr = activity.getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return  mime.getExtensionFromMimeType(cr.getType(mUri));
+    }
+    public void deleteLoaiTu(Context context, LoaiTu loaiTu) {
+        loaiRef.child(String.valueOf(loaiTu.getId())).removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                Toast.makeText(context, "Delete success", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

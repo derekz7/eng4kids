@@ -2,16 +2,12 @@ package com.ducle.learnengforkids;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 public class PlayMusic {
     public static MediaPlayer mpClick;
-
-//    public PlayMusic(Context context) {
-//        this.mpClick = MediaPlayer.create(context, R.raw.click);
-//        this.mpIntro = MediaPlayer.create(context, R.raw.intro);
-//        this.mpBackground = MediaPlayer.create(context, R.raw.waltz);
-//    }
-
 
     public static void playClick(Context context){
         mpClick = MediaPlayer.create(context,R.raw.click);
@@ -27,6 +23,10 @@ public class PlayMusic {
                 mp.release();
             }
         });
+    }
+    public static void startAnimationClick(View v,Context context){
+        Animation animation = AnimationUtils.loadAnimation(context,R.anim.click_item);
+        v.startAnimation(animation);
     }
 
 }

@@ -33,7 +33,7 @@ public class QuanLyUser extends AppCompatActivity {
     private List<User> userList;
     private UserAdapter userAdapter;
     private EditText edtKeyWord;
-    private ImageButton igbFind;
+    private ImageButton igbFind, igbBack;
     private RecyclerView rcvUser;
     private UserDB db;
     @Override
@@ -63,6 +63,12 @@ public class QuanLyUser extends AppCompatActivity {
                 else{
                     userAdapter.setData(userList);
                 }
+            }
+        });
+        igbBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -109,6 +115,7 @@ public class QuanLyUser extends AppCompatActivity {
         rcvUser = findViewById(R.id.lv_listUser);
         edtKeyWord = findViewById(R.id.edtKeyWord);
         igbFind = findViewById(R.id.igbFind);
+        igbBack = findViewById(R.id.btnBackListUser);
     }
 
 

@@ -24,6 +24,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewholder
 
     public interface onItemClickListener {
         void onItemClick(int position, View v);
+        void onItemLongCLick(int pos, View v);
     }
 
     public void setOnItemClickListener(onItemClickListener listener) {
@@ -85,6 +86,18 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewholder
                             listener.onItemClick(position,v);
                         }
                     }
+                }
+            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (listener != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            listener.onItemLongCLick(position,v);
+                        }
+                    }
+                    return false;
                 }
             });
         }

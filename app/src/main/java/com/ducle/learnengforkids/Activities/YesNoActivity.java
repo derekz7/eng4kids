@@ -4,6 +4,7 @@ import static com.ducle.learnengforkids.Activities.ChoiGameActivity.cauDoList;
 import static com.ducle.learnengforkids.Activities.ChoiGameActivity.mpGame;
 import static com.ducle.learnengforkids.Activities.MainMenuActivity.setAnim_button_click;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -120,8 +121,14 @@ public class YesNoActivity extends AppCompatActivity {
 
     private void ViewQuestions() {
         if (currentQuestion >= listCauDo.size()) {
-            //End
-            Toast.makeText(YesNoActivity.this, "End", Toast.LENGTH_SHORT).show();
+            db.updateDiem(username, score+100);
+            txScore.setText(String.valueOf(score+100));
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("diem", String.valueOf(score+100));
+            editor.apply();
+            playSound(R.raw.achivement);
+            dialog_EndGame();
+//            Toast.makeText(YesNoActivity.this, "End", Toast.LENGTH_SHORT).show();
         } else {
             btnNo.setVisibility(View.VISIBLE);
             btnYes.setVisibility(View.VISIBLE);
@@ -262,6 +269,64 @@ public class YesNoActivity extends AppCompatActivity {
     private void refreshQuestion() {
         Collections.shuffle(listCauDo);
         ViewQuestions();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void dialog_EndGame(){
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_score);
+        final ImageButton igbReplay, igbReturn;
+        final TextView tvNewScore, complete;
+        igbReturn = dialog.findViewById(R.id.btnReturn);
+        igbReplay = dialog.findViewById(R.id.btnReplay);
+        tvNewScore = dialog.findViewById(R.id.tvNewScore);
+        tvNewScore.setText("+ 100");
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        window.setAttributes(windowAttributes);
+        dialog.setCancelable(false);
+
+        igbReplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlayMusic.playClick(YesNoActivity.this);
+                setAnim_button_click(igbReplay);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        currentQuestion = 0;
+                        refreshQuestion();
+                        dialog.cancel();
+                    }
+                },400);
+
+            }
+        });
+
+        igbReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlayMusic.playClick(YesNoActivity.this);
+                setAnim_button_click(igbReturn);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                        dialog.dismiss();
+                    }
+                },400);
+
+            }
+        });
+
+        dialog.show();
     }
 
     private void dialogTimeOut() {

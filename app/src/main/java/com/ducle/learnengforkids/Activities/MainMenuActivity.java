@@ -115,6 +115,11 @@ public class MainMenuActivity extends AppCompatActivity {
                 }, 500);
 
             }
+
+            @Override
+            public void onItemLongCLick(int pos, View v) {
+
+            }
         });
 
         btnsetting.setOnClickListener(new View.OnClickListener() {

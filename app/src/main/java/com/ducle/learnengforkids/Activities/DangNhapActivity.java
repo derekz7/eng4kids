@@ -1,6 +1,7 @@
 package com.ducle.learnengforkids.Activities;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -34,6 +35,11 @@ import com.ducle.learnengforkids.Module.TuVung;
 import com.ducle.learnengforkids.Module.User;
 import com.ducle.learnengforkids.PlayMusic;
 import com.ducle.learnengforkids.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -48,7 +54,7 @@ public class DangNhapActivity extends AppCompatActivity {
     private MediaPlayer mpbg;
     private VideoView videoBg;
     private Animation alpha_layout, fade_out, fade_in;
-
+    private FirebaseAuth mAuth;
     public static List<User> userList;
     private DialogLoading dialogLoading;
 
@@ -59,7 +65,18 @@ public class DangNhapActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         init();
-        getData();
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.signInAnonymously().addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    getData();
+                }
+                else {
+                    Toast.makeText(DangNhapActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         String path = "android.resource://com.ducle.learnengforkids/" + R.raw.forestvid;
         Uri uri = Uri.parse(path);
         videoBg.setVideoURI(uri);
@@ -71,7 +88,7 @@ public class DangNhapActivity extends AppCompatActivity {
             }
         });
         showLoginView();
-         playIntro();
+        playIntro();
         onClick();
 
     }
@@ -125,10 +142,10 @@ public class DangNhapActivity extends AppCompatActivity {
                             dialogErrConn();
                         } else {
                             if (checkDangNhap()) {
-                                if (edtUsername.getText().toString().equalsIgnoreCase("admin")) {
+                                if (edtUsername.getText().toString().equals("admin")){
                                     startActivity(new Intent(DangNhapActivity.this, QuanLyActivity.class));
                                     finish();
-                                } else {
+                                }else {
                                     Intent intent = new Intent(DangNhapActivity.this, MainMenuActivity.class);
                                     startActivity(intent);
                                     finishAffinity();
@@ -186,7 +203,6 @@ public class DangNhapActivity extends AppCompatActivity {
 
         }
     }
-
 
     private boolean checkDangNhap() {
         String username = edtUsername.getText().toString().trim();
@@ -305,6 +321,8 @@ public class DangNhapActivity extends AppCompatActivity {
         super.onDestroy();
         mpbg.stop();
     }
+
+
 
     private boolean isConnected(Activity activity) {
         ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);

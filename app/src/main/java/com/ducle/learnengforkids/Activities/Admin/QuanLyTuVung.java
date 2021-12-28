@@ -33,6 +33,7 @@ import com.ducle.learnengforkids.DialogLoading;
 import com.ducle.learnengforkids.FireBase.WordDB;
 import com.ducle.learnengforkids.Module.LoaiTu;
 import com.ducle.learnengforkids.Module.TuVung;
+import com.ducle.learnengforkids.PlayMusic;
 import com.ducle.learnengforkids.R;
 import com.squareup.picasso.Picasso;
 
@@ -133,7 +134,7 @@ public class QuanLyTuVung extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = edtName.getText().toString().trim();
-                if (imgAnh != null && name.length() != 0) {
+                if (imgAnh != null && name.length() != 0 && imgUri != null) {
                     DialogLoading dialogLoading = new DialogLoading(v.getContext());
                     dialogLoading.show();
                     db.upLoadToFireBase(QuanLyTuVung.this, imgUri, name, loaiTu);
@@ -172,6 +173,7 @@ public class QuanLyTuVung extends AppCompatActivity {
         dialogSua.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogSua.setContentView(R.layout.dialog_themtumoi);
         Button btnSave, btnCancel, btnOpenLib;
+        ImageButton igbCancel = dialogSua.findViewById(R.id.igbCancel_X);
         TextView tv_Title = dialogSua.findViewById(R.id.tvTitle);
         tv_Title.setText(tuVung.getNoiDung());
         EditText edtName = dialogSua.findViewById(R.id.editNoiDung);
@@ -214,7 +216,6 @@ public class QuanLyTuVung extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         tuVungList.remove(tuVung);
                         db.deleteTuVung(QuanLyTuVung.this,tuVung);
-                        tuVungList = db.getListTuVung();
                         tuVungAdapter.setData(tuVungList);
                         dialog.dismiss();
                         dialogSua.dismiss();
@@ -227,7 +228,7 @@ public class QuanLyTuVung extends AppCompatActivity {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onClick(View v) {
-                if (imgAnh != null) {
+                if (imgAnh != null && imgUri != null) {
                     DialogLoading dialogLoading = new DialogLoading(v.getContext());
                     dialogLoading.show();
                     db.updateImg(QuanLyTuVung.this, imgUri, tuVung, loaiTu);
@@ -243,7 +244,7 @@ public class QuanLyTuVung extends AppCompatActivity {
                     }, 1500);
 
                 } else {
-                    Toast.makeText(QuanLyTuVung.this, "Vui long chon hinh anh", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QuanLyTuVung.this, "Bạn chưa thay đổi ảnh", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -255,6 +256,20 @@ public class QuanLyTuVung extends AppCompatActivity {
                 galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
                 galleryIntent.setType("image/*");
                 startActivityForResult(galleryIntent, 2);
+            }
+        });
+        igbCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlayMusic.playClick(v.getContext());
+                PlayMusic.startAnimationClick(v,v.getContext());
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialogSua.dismiss();
+                    }
+                },400);
+
             }
         });
         dialogSua.show();
