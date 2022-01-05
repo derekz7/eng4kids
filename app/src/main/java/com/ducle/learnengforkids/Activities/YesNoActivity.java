@@ -42,7 +42,7 @@ import java.util.Random;
 public class YesNoActivity extends AppCompatActivity {
     private List<CauDo> listCauDo;
     private ImageView imgWordView;
-    private ImageButton btnBackYN, btnSettingYN, btnYes, btnNo;
+    private ImageButton btnBackYN, btnSettingYN, btnYes, btnNo, igbSpeak;
     private TextView txScore, txCauHoi;
     private ProgressBar progressTime;
     private CountDownTimer count;
@@ -93,6 +93,14 @@ public class YesNoActivity extends AppCompatActivity {
                     }
                 }, 400);
 
+            }
+        });
+        igbSpeak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlayMusic.playClick(v.getContext());
+                setAnim_button_click(igbSpeak);
+                speak.speak(txCauHoi.getText().toString());
             }
         });
         btnBackYN.setOnClickListener(new View.OnClickListener() {
@@ -218,6 +226,7 @@ public class YesNoActivity extends AppCompatActivity {
 
 
     private void initUI() {
+        igbSpeak = findViewById(R.id.igbSpeak);
         btnYes = findViewById(R.id.igbYes);
         btnNo = findViewById(R.id.igbNo);
         imgWordView = findViewById(R.id.imgWordView);
